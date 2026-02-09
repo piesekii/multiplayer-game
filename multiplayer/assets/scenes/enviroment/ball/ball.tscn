@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://csg6as35svocy"]
+
+[ext_resource type="Script" uid="uid://t7v2joennrr0" path="res://assets/scenes/enviroment/ball/ball.gd" id="1_3jt7b"]
+[ext_resource type="Texture2D" uid="uid://deruawj2j5053" path="res://assets/scenes/enviroment/kenney_prototype-textures/PNG/Red/texture_05.png" id="1_i4d2y"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_w3qld"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3jt7b"]
+albedo_texture = ExtResource("1_i4d2y")
+uv1_scale = Vector3(-0.145, -0.145, -0.145)
+uv1_triplanar = true
+
+[sub_resource type="SphereMesh" id="SphereMesh_i4d2y"]
+material = SubResource("StandardMaterial3D_3jt7b")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_i4d2y"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_i4d2y"]
+radius = 0.5901619
+
+[node name="Ball" type="RigidBody3D" unique_id=353820732]
+collision_layer = 2
+collision_mask = 3
+mass = 3.0
+script = ExtResource("1_3jt7b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=246739764]
+shape = SubResource("SphereShape3D_w3qld")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1602974732]
+mesh = SubResource("SphereMesh_i4d2y")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2015659835]
+replication_config = SubResource("SceneReplicationConfig_i4d2y")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=312790980]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+billboard = 2
+text = "1"
+font_size = 24
+outline_size = 10
+
+[node name="Area3D" type="Area3D" parent="." unique_id=322895417]
+unique_name_in_owner = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1137501801]
+shape = SubResource("SphereShape3D_i4d2y")

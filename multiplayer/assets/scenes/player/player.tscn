@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://d2ysicrotb3vv"]
+
+[ext_resource type="Texture2D" uid="uid://bjxvdtebxa6oi" path="res://assets/scenes/enviroment/kenney_prototype-textures/Vector/texture_01.svg" id="1_oqktf"]
+[ext_resource type="Script" uid="uid://dn5brq2xg3gc" path="res://assets/scenes/player/player.gd" id="1_ratu8"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3cnex"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_oqktf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wg42c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ratu8"]
+albedo_color = Color(0.8760764, 0.87598014, 1.1551381e-06, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3cnex"]
+material = SubResource("StandardMaterial3D_ratu8")
+top_radius = 0.23
+bottom_radius = 0.005
+height = 1.097
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xo733"]
+albedo_texture = ExtResource("1_oqktf")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wg42c"]
+material = SubResource("StandardMaterial3D_xo733")
+top_radius = 0.15
+bottom_radius = 0.115
+height = 0.035
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ratu8"]
+radius = 0.366
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ratu8"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Head:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Head/Camera3D:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[node name="Player" type="CharacterBody3D" unique_id=251699600]
+script = ExtResource("1_ratu8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=851096930]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_3cnex")
+
+[node name="body" type="MeshInstance3D" parent="." unique_id=110295209]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_oqktf")
+surface_material_override/0 = SubResource("StandardMaterial3D_wg42c")
+
+[node name="Head" type="Node3D" parent="." unique_id=1906591322]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=2070688267]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.1920929e-07)
+
+[node name="face_visual" type="Node3D" parent="Head/Camera3D" unique_id=208783595]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.1920929e-07)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Head/Camera3D/face_visual" unique_id=1594965356]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.8)
+mesh = SubResource("CylinderMesh_3cnex")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Head/Camera3D/face_visual" unique_id=1370786874]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.1879633, 0.23537683, -0.47802484)
+mesh = SubResource("CylinderMesh_wg42c")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Head/Camera3D/face_visual" unique_id=472639754]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.2120367, 0.23537683, -0.47802484)
+mesh = SubResource("CylinderMesh_wg42c")
+
+[node name="RayCastInteractable" type="ShapeCast3D" parent="Head/Camera3D" unique_id=1521699328]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -1.1920929e-07)
+shape = SubResource("SphereShape3D_ratu8")
+target_position = Vector3(0, -1.685, 0)
+max_results = 2
+collide_with_areas = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1788257273]
+replication_config = SubResource("SceneReplicationConfig_ratu8")
+
+[node name="nameplate" type="Label3D" parent="." unique_id=974185777]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+billboard = 2
+text = "Peer ID"
+font_size = 24
+outline_size = 16
+
+[node name="PlayerMenu" type="CanvasLayer" parent="." unique_id=1269545568]
+
+[node name="Menu" type="Control" parent="PlayerMenu" unique_id=1375982614]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="PlayerMenu/Menu" unique_id=1851913920]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerMenu/Menu/PanelContainer" unique_id=508155340]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ButtonLeave" type="Button" parent="PlayerMenu/Menu/PanelContainer/MarginContainer" unique_id=759439976]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sair do jogo"
