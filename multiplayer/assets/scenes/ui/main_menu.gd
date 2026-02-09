@@ -3,7 +3,7 @@ extends CanvasLayer
 @onready var button_join: Button = %ButtonJoin
 @onready var button_quit: Button = %ButtonQuit
 
-const WORLD_DEBUG = preload("res://assets/scenes/enviroment/world_debug.tscn")
+const WORLD_DEBUG = preload("res://assets/enviroment/debug_level/world_debug.tscn")
 
 
 
@@ -15,12 +15,12 @@ func _ready() -> void:
 		Network.start_server()
 		get_tree().debug_collisions_hint = true
 		add_world()
-		hide()
+		%AnimationPlayer.play("transition")
 
 func on_join() -> void:
 	Network.join_server()
 	add_world()
-	hide()
+	%AnimationPlayer.play("transition")
 
 func add_world() -> void:
 	var new_world = WORLD_DEBUG.instantiate()
