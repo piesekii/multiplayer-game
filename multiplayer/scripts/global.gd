@@ -16,6 +16,12 @@ func shoot_ball(pos, dir, force):
 	spawn_container.add_child(new_ball, true)
 	new_ball.apply_central_impulse(dir * force)
 
+@export var counter := 1
 @rpc("any_peer")
-func play_jukebox():
-	jukebox.play_jukebox()
+func _counter():
+	counter += 1
+	sync_counter.rpc(counter)
+
+@rpc("authority", "call_local")
+func sync_counter(value: int):
+	counter = value

@@ -12,7 +12,7 @@ const JUMP_VELOCITY = 4.5
 @onready var menu: Control = %Menu
 @onready var button_leave: Button = %ButtonLeave
 
-@onready var raycast_interactable: RayCast3D = %RayCastInteractable
+@onready var shapecast_interactable: ShapeCast3D = %ShapeCastInteractable
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(int(name))
@@ -20,14 +20,13 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	add_to_group('Player')
 	nameplate.text = name
-	
 	if !is_multiplayer_authority(): 
 		set_process(false)
 		set_physics_process(false)
 		return
 	
 	menu.hide()
-	hide_face()
+	%face_visual.visible = false
 	camera_3d.current = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
@@ -49,18 +48,10 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("left_click"):
 		shoot()
-	
-	if raycast_interactable.is_colliding():
-		var target = raycast_interactable.get_collider() # A CollisionObject3D.
-		if target.is_in_group("Interactable"):
-			if Input.is_action_just_pressed("interact"):
-				print("interact pressed")
+	if get_interactable_component_at_shapecast():
+		if Input.is_action_just_pressed("interact"):
+			get_interactable_component_at_shapecast().interact_with()
 
-func shoot():
-	var facing_dir = -head.transform.basis.z
-	var force = 100
-	var pos = global_position
-	Global.shoot_ball.rpc_id(1, pos, facing_dir, force)
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -82,5 +73,20 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-func hide_face() -> void:
-	%face_visual.visible = false
+func get_interactable_component_at_shapecast() -> InteractableComponent:
+	for i in shapecast_interactable.get_collision_count():
+		if shapecast_interactable.get_collider(i) != null:
+			if i > 0 and shapecast_interactable.get_collider(0) != $'.':
+				return null
+			if shapecast_interactable.get_collider(i).get_node_or_null('InteractableComponent') is InteractableComponent:
+				return shapecast_interactable.get_collider(i).get_node_or_null('InteractableComponent')
+	return null
+
+func shoot():
+	var facing_dir = -head.transform.basis.z
+	var force = 100
+	var pos = global_position
+	Global.shoot_ball.rpc_id(1, pos, facing_dir, force)
+
+func receber_data(data: int):
+	Global.counter = data

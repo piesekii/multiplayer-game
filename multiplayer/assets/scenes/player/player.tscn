@@ -28,7 +28,7 @@ bottom_radius = 0.115
 height = 0.035
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ratu8"]
-radius = 0.366
+radius = 0.511
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ratu8"]
 properties/0/path = NodePath(".:position")
@@ -80,12 +80,12 @@ mesh = SubResource("CylinderMesh_wg42c")
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.2120367, 0.23537683, -0.47802484)
 mesh = SubResource("CylinderMesh_wg42c")
 
-[node name="RayCastInteractable" type="ShapeCast3D" parent="Head/Camera3D" unique_id=1521699328]
+[node name="ShapeCastInteractable" type="ShapeCast3D" parent="Head/Camera3D" unique_id=1521699328]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -1.1920929e-07)
 shape = SubResource("SphereShape3D_ratu8")
-target_position = Vector3(0, -1.685, 0)
-max_results = 2
+target_position = Vector3(0, -1.905, 0)
+max_results = 5
 collide_with_areas = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1788257273]

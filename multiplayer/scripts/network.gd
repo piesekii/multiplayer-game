@@ -35,7 +35,7 @@ func add_player(peer_id: int):
 	var rand_z = randf_range(-5.0,5.0)
 	new_player.position = Vector3(rand_x, 1, rand_z)
 	get_tree().current_scene.add_child(new_player, true)
-
+	Global.sync_counter.rpc_id(peer_id, Global.counter)
 func remove_player(peer_id: int):
 	if peer_id == 1:
 		leave_server()
