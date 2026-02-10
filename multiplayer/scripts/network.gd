@@ -6,6 +6,7 @@ var PORT = 9999
 var IP_ADDRESS = "127.0.0.1"
 
 const PLAYER = preload("uid://d2ysicrotb3vv")
+const PLAYER_SOURCE = preload("uid://555xn31k8era")
 
 
 func start_server() -> void:
@@ -28,7 +29,7 @@ func add_player(peer_id: int):
 	if peer_id == 1:
 		return
 	
-	var new_player = PLAYER.instantiate()
+	var new_player = PLAYER_SOURCE.instantiate()
 	new_player.name = str(peer_id)
 	
 	var rand_x = randf_range(-5.0,5.0)

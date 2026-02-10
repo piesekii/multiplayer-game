@@ -10,6 +10,7 @@ const BALL = preload("uid://csg6as35svocy")
 
 @rpc("any_peer")
 func shoot_ball(pos, dir, force):
+	if !multiplayer.is_server(): return
 	var new_ball : RigidBody3D = BALL.instantiate()
 	
 	new_ball.position = pos + Vector3(0.0, 1.0, 0.0) + (dir * 2.0)

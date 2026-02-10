@@ -3,9 +3,7 @@ extends CanvasLayer
 @onready var button_join: Button = %ButtonJoin
 @onready var button_quit: Button = %ButtonQuit
 
-const WORLD_DEBUG = preload("res://assets/enviroment/debug_level/world_debug.tscn")
-
-
+const WORLD_DEBUG = preload("uid://ce6thikstj7tl")
 
 func _ready() -> void:
 	button_join.pressed.connect(on_join)

@@ -1,0 +1,212 @@
+[gd_scene format=3 uid="uid://cnjas6whorjum"]
+
+[ext_resource type="Script" uid="uid://b3eb4oc1ex6h" path="res://assets/scenes/ui/main_menu.gd" id="1_4lhqn"]
+[ext_resource type="Shader" uid="uid://ddxgjcn15adry" path="res://assets/shaders/transition.gdshader" id="2_qcgr3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4lhqn"]
+shader = ExtResource("2_qcgr3")
+shader_parameter/use_sprite_alpha = true
+shader_parameter/use_transition_texture = false
+shader_parameter/transition_type = 0
+shader_parameter/position = Vector2(0.5, 0.5)
+shader_parameter/invert = false
+shader_parameter/grid_size = Vector2(6.215, 16.455)
+shader_parameter/rotation_angle = 0.0
+shader_parameter/stagger = Vector2(0, 0)
+shader_parameter/stagger_frequency = Vector2i(2, 2)
+shader_parameter/flip_frequency = Vector2i(1, 1)
+shader_parameter/basic_feather = 0.0
+shader_parameter/use_mask_size = false
+shader_parameter/mask_size = Vector2(100, 100)
+shader_parameter/edges = 6
+shader_parameter/shape_feather = 0.1
+shader_parameter/sectors = 1
+shader_parameter/clock_feather = 0.0
+shader_parameter/progress = 0.0
+shader_parameter/progress_bias = Vector2(0, 0)
+
+[sub_resource type="Animation" id="Animation_qcgr3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/stagger")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Control:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.96487397, 0.6941263, 0.749419, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_or24b"]
+resource_name = "transition"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/progress")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.075]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/stagger")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(8.725, 8.84)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"hide"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Control:modulate")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.10000001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:color")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.03333333, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.9999998, 0.2582753, 0.5108324, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_75pbp"]
+_data = {
+&"RESET": SubResource("Animation_qcgr3"),
+&"transition": SubResource("Animation_or24b")
+}
+
+[node name="MainMenu" type="CanvasLayer" unique_id=1077394114]
+script = ExtResource("1_4lhqn")
+
+[node name="Control" type="Control" parent="." unique_id=737332477]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Center" type="PanelContainer" parent="Control" unique_id=2078927559]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/Center" unique_id=833240594]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Center/MarginContainer" unique_id=1973694029]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/Center/MarginContainer/VBoxContainer" unique_id=457908782]
+layout_mode = 2
+text = "Muck so que bom"
+
+[node name="ButtonJoin" type="Button" parent="Control/Center/MarginContainer/VBoxContainer" unique_id=1195106248]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Join"
+
+[node name="ButtonQuit" type="Button" parent="Control/Center/MarginContainer/VBoxContainer" unique_id=458587503]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit"
+
+[node name="Transition" type="ColorRect" parent="." unique_id=399091334]
+z_index = -1
+material = SubResource("ShaderMaterial_4lhqn")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.96487397, 0.6941263, 0.749419, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Transition" unique_id=1485404880]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_75pbp")

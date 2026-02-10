@@ -7,5 +7,6 @@ func _ready() -> void:
 	area_3d.body_entered.connect(on_ball_hit)
 
 func on_ball_hit(body: Node3D):
-	if body.is_in_group('Player'):
-		queue_free()
+	pass
+	#if body.is_in_group('Player'):
+		#queue_free()

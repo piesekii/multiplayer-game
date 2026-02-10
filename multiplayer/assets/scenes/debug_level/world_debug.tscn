@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://ce6thikstj7tl"]
 
-[ext_resource type="Script" uid="uid://qdwolw8ggr0f" path="res://assets/enviroment/debug_level/world_debug.gd" id="1_ql3sk"]
-[ext_resource type="PackedScene" uid="uid://cwgt5usdphw4r" path="res://assets/enviroment/debug_level/blend/debug_level.blend" id="3_syp3n"]
+[ext_resource type="Script" uid="uid://qdwolw8ggr0f" path="res://assets/scenes/debug_level/world_debug.gd" id="1_ql3sk"]
+[ext_resource type="PackedScene" uid="uid://cwgt5usdphw4r" path="res://assets/scenes/debug_level/blend/debug_level.blend" id="3_syp3n"]
 [ext_resource type="Material" uid="uid://ccum8amocw07e" path="res://assets/shaders/toon_shader.tres" id="4_2f13d"]
 [ext_resource type="Script" uid="uid://lod8yuv1exyt" path="res://assets/enviroment/interactable/InteractableComponent.gd" id="4_ihklu"]
 [ext_resource type="Texture2D" uid="uid://deruawj2j5053" path="res://assets/enviroment/kenney_prototype-textures/PNG/Red/texture_05.png" id="5_gkrt5"]
 [ext_resource type="Script" uid="uid://dfy0wfxd6eihf" path="res://scripts/global.gd" id="6_c5fcp"]
+[ext_resource type="PackedScene" uid="uid://ca0wevg1lb4rx" path="res://assets/enviroment/water/WaterMaker3D/WaterMaker3D.tscn" id="7_6f5u7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sdugn"]
 sky_top_color = Color(0.6752427, 0.19323969, 0.7188246, 1)
@@ -21,6 +22,9 @@ sky_material = SubResource("ProceduralSkyMaterial_sdugn")
 background_mode = 2
 sky = SubResource("Sky_ql3sk")
 tonemap_mode = 2
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
 glow_enabled = true
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gkrt5"]
@@ -96,6 +100,83 @@ _data = {
 &"press": SubResource("Animation_c5fcp")
 }
 
+[sub_resource type="GDScript" id="GDScript_2f13d"]
+resource_name = "BallShooter"
+script/source = "extends Node3D
+
+
+func shoot():
+	var facing_dir = Vector3(0,0, 1)
+	var force = randi_range(90, 110)
+	var pos = global_position
+	Global.shoot_ball(pos, facing_dir, force)
+
+
+func _on_timer_timeout() -> void:
+	#shoot()
+	pass
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6f5u7"]
+resource_local_to_scene = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_c74ml"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_6f5u7")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n1yv3"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_6f5u7")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ypu4"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_color = Color(0.30980393, 0.5411765, 0.8666667, 0.3882353)
+roughness = 0.0
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_c74ml")
+refraction_enabled = true
+refraction_texture = SubResource("NoiseTexture2D_n1yv3")
+uv1_scale = Vector3(0.04, 0.04, 0.04)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_c74ml"]
+resource_local_to_scene = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8ypu4"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_c74ml")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cruy3"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_c74ml")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m6i4j"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_color = Color(0.30980393, 0.5411765, 0.8666667, 0.3882353)
+roughness = 0.0
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_8ypu4")
+refraction_enabled = true
+refraction_texture = SubResource("NoiseTexture2D_cruy3")
+uv1_scale = Vector3(0.04, 0.04, 0.04)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
 [node name="World" type="Node3D" unique_id=1717920591]
 script = ExtResource("1_ql3sk")
 
@@ -122,13 +203,10 @@ spawn_path = NodePath("../SpawnContainer")
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1137082674]
 transform = Transform3D(-0.9615642, -0.1372901, 0.23779352, 4.4703487e-08, 0.8660254, 0.5, -0.27458027, 0.48078212, -0.832739, 1.5788616, 5.750045, -9.889214)
 
-[node name="debug_level" parent="." unique_id=1943235959 instance=ExtResource("3_syp3n")]
+[node name="debug_level" parent="." unique_id=967853051 instance=ExtResource("3_syp3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11244774, 0.087500095, 0.054012537)
 
-[node name="player-reference" parent="debug_level" index="1" unique_id=1947148716]
-surface_material_override/0 = ExtResource("4_2f13d")
-
-[node name="Cube_010" parent="debug_level" index="11" unique_id=1508479315]
+[node name="player-reference" parent="debug_level" index="1" unique_id=1424144644]
 surface_material_override/0 = ExtResource("4_2f13d")
 
 [node name="button" type="StaticBody3D" parent="." unique_id=268096522]
@@ -163,6 +241,27 @@ shape = SubResource("CylinderShape3D_gkrt5")
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_gl70v")
 
+[node name="BallSpawner" type="Node3D" parent="." unique_id=1877347808]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7, 10.1, -11.900001)
+script = SubResource("GDScript_2f13d")
+
+[node name="Timer" type="Timer" parent="BallSpawner" unique_id=942416820]
+autostart = true
+
+[node name="Water" type="CSGCombiner3D" parent="." unique_id=477854757]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.452295, 1.5776978, 5.5590577)
+
+[node name="WaterMaker3D" parent="Water" unique_id=1288463309 instance=ExtResource("7_6f5u7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.382275, -9.898592, 11.968187)
+size = Vector3(25.64526, 16.132324, 27.432266)
+material = SubResource("StandardMaterial3D_8ypu4")
+
+[node name="WaterMaker3D2" parent="Water" unique_id=1458865344 instance=ExtResource("7_6f5u7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8721895, 6.7079296, 21.618773)
+size = Vector3(2.4875178, 49.345367, 3.0664845)
+material = SubResource("StandardMaterial3D_m6i4j")
+
 [connection signal="interacted" from="button/InteractableComponent" to="button" method="_press"]
+[connection signal="timeout" from="BallSpawner/Timer" to="BallSpawner" method="_on_timer_timeout"]
 
 [editable path="debug_level"]
