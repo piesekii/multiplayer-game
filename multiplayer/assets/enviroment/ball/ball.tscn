@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://csg6as35svocy"]
 
 [ext_resource type="Script" uid="uid://t7v2joennrr0" path="res://assets/enviroment/ball/ball.gd" id="1_3jt7b"]
-[ext_resource type="Texture2D" uid="uid://deruawj2j5053" path="res://assets/enviroment/kenney_prototype-textures/PNG/Red/texture_05.png" id="1_i4d2y"]
+[ext_resource type="Texture2D" uid="uid://deruawj2j5053" path="res://assets/scenes/textures/kenney_prototype-textures/PNG/Red/texture_05.png" id="1_i4d2y"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_w3qld"]
 

@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody3D
 
 # Ground movement settings
@@ -38,11 +39,20 @@ const CROUCH_JUMP_ADD = CROUCH_TRANSLATE * 0.5
 var is_crouched := false
 var is_swimming := false
 
+var last_checkpoint_pos : Vector3
+
 const HEADBOB_MOVE_AMOUNT = 0.06
 const HEADBOB_FREQUENCY = 2.4
 var headbob_time := 0.0
 var wish_dir := Vector3.ZERO
 var cam_aligned_wish_dir := Vector3.ZERO
+
+var health: float = 100:
+	set(new_value):
+		health = clamp(new_value, 0.0, 100.0)
+		if health <= 0.0:
+			global_position = last_checkpoint_pos
+			health = 100
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(int(name))
@@ -50,7 +60,8 @@ func _enter_tree() -> void:
 func _ready():
 	add_to_group('Player')
 	nameplate.text = name
-	if !is_multiplayer_authority(): 
+	if !is_multiplayer_authority():
+		%health.hide()
 		set_process(false)
 		set_physics_process(false)
 		
@@ -69,7 +80,8 @@ func _process(delta: float) -> void:
 	if get_interactable_component_at_shapecast():
 		if Input.is_action_just_pressed("interact"):
 			get_interactable_component_at_shapecast().interact_with()
-
+	%health.text = str(health)
+	
 func _physics_process(delta):
 	var input_dir = Input.get_vector("left", "right", "forward", "backward").normalized()
 	# Depending on which way you have you character facing, you may have to negate the input directions

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d2ysicrotb3vv"]
 
-[ext_resource type="Texture2D" uid="uid://bjxvdtebxa6oi" path="res://assets/enviroment/kenney_prototype-textures/Vector/texture_01.svg" id="1_oqktf"]
+[ext_resource type="Texture2D" uid="uid://bjxvdtebxa6oi" path="res://assets/scenes/textures/kenney_prototype-textures/Vector/texture_01.svg" id="1_oqktf"]
 [ext_resource type="Script" uid="uid://dn5brq2xg3gc" path="res://assets/scenes/player/player.gd" id="1_ratu8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3cnex"]

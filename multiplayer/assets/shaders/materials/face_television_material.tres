@@ -1,0 +1,36 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://c2y8qfrfql022"]
+
+[ext_resource type="Shader" uid="uid://4w0mnpd3813c" path="res://assets/shaders/toon_shader.gdshader" id="1_tbx74"]
+
+[sub_resource type="Gradient" id="Gradient_b78mj"]
+offsets = PackedFloat32Array(0.45736435, 0.51937985)
+colors = PackedColorArray(7.460266e-07, 0, 0.40340742, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_u3os6"]
+gradient = SubResource("Gradient_b78mj")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_tbx74")
+shader_parameter/albedo_color = Color(0.44307688, 0.80069786, 1, 1)
+shader_parameter/albedo_affect = 0.0
+shader_parameter/use_stepped = true
+shader_parameter/steps = 6.0
+shader_parameter/step_smoothness = 1.0
+shader_parameter/shadow_tint = Color(0, 0, 0.23921569, 1)
+shader_parameter/shadow_tint_amount = 0.4
+shader_parameter/specular = 0.0
+shader_parameter/normal_strength = 0.0
+shader_parameter/use_rim = true
+shader_parameter/rim_color = Color(1, 1, 1, 1)
+shader_parameter/rim_amount = 1.61
+shader_parameter/rim_smoothness = 0.74
+shader_parameter/rim_mask_shadow = 1.0
+shader_parameter/rim_blend = 1.0
+shader_parameter/use_pattern = true
+shader_parameter/pattern_texture = SubResource("GradientTexture1D_u3os6")
+shader_parameter/pattern_uv_mode = 1
+shader_parameter/pattern_tiling = 32.0
+shader_parameter/pattern_amount = 0.5
+shader_parameter/pattern_smoothness = 0.5
+shader_parameter/pattern_blend = 0.2

@@ -7,7 +7,6 @@ var jukebox
 
 const BALL = preload("uid://csg6as35svocy")
 
-
 @rpc("any_peer")
 func shoot_ball(pos, dir, force):
 	if !multiplayer.is_server(): return

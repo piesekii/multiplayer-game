@@ -1,12 +1,16 @@
-[gd_scene format=3 uid="uid://ce6thikstj7tl"]
+[gd_scene format=4 uid="uid://ce6thikstj7tl"]
 
 [ext_resource type="Script" uid="uid://qdwolw8ggr0f" path="res://assets/scenes/debug_level/world_debug.gd" id="1_ql3sk"]
 [ext_resource type="PackedScene" uid="uid://cwgt5usdphw4r" path="res://assets/scenes/debug_level/blend/debug_level.blend" id="3_syp3n"]
 [ext_resource type="Material" uid="uid://ccum8amocw07e" path="res://assets/shaders/toon_shader.tres" id="4_2f13d"]
 [ext_resource type="Script" uid="uid://lod8yuv1exyt" path="res://assets/enviroment/interactable/InteractableComponent.gd" id="4_ihklu"]
-[ext_resource type="Texture2D" uid="uid://deruawj2j5053" path="res://assets/enviroment/kenney_prototype-textures/PNG/Red/texture_05.png" id="5_gkrt5"]
+[ext_resource type="Script" uid="uid://cbxs1y2k56t5f" path="res://assets/scenes/debug_level/blend/texture_changer.gd" id="4_n1yv3"]
+[ext_resource type="Texture2D" uid="uid://deruawj2j5053" path="res://assets/scenes/textures/kenney_prototype-textures/PNG/Red/texture_05.png" id="5_gkrt5"]
 [ext_resource type="Script" uid="uid://dfy0wfxd6eihf" path="res://scripts/global.gd" id="6_c5fcp"]
+[ext_resource type="Material" uid="uid://c2y8qfrfql022" path="res://assets/shaders/materials/face_television_material.tres" id="6_n1yv3"]
 [ext_resource type="PackedScene" uid="uid://ca0wevg1lb4rx" path="res://assets/enviroment/water/WaterMaker3D/WaterMaker3D.tscn" id="7_6f5u7"]
+[ext_resource type="PackedScene" uid="uid://dwlh8cpenawp5" path="res://assets/enviroment/checkPlayers/checkPlayers.tscn" id="11_cruy3"]
+[ext_resource type="Texture2D" uid="uid://yd2jor1ehbfj" path="res://assets/scenes/textures/kenney_prototype-textures/PNG/Orange/texture_08.png" id="11_m6i4j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sdugn"]
 sky_top_color = Color(0.6752427, 0.19323969, 0.7188246, 1)
@@ -26,11 +30,50 @@ ssr_enabled = true
 ssao_enabled = true
 ssil_enabled = true
 glow_enabled = true
+glow_strength = 0.84
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_gkrt5"]
 properties/0/path = NodePath("Global:counter")
 properties/0/spawn = true
 properties/0/replication_mode = 1
+
+[sub_resource type="Animation" id="Animation_n1yv3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.09120464, 3.3681464, 2.3310318)]
+}
+
+[sub_resource type="Animation" id="Animation_8ypu4"]
+resource_name = "test"
+length = 15.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5.9666667, 13.033334),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.09120464, 3.3681464, 2.3310318), Vector3(-0.68480504, 2.7254658, 2.3310318), Vector3(0.6782629, 3.7385955, 2.3310318)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cruy3"]
+_data = {
+&"RESET": SubResource("Animation_n1yv3"),
+&"test": SubResource("Animation_8ypu4")
+}
 
 [sub_resource type="GDScript" id="GDScript_gkrt5"]
 resource_name = "button_test"
@@ -117,22 +160,22 @@ func _on_timer_timeout() -> void:
 	pass
 "
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_6f5u7"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_cruy3"]
 resource_local_to_scene = true
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_c74ml"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_m6i4j"]
 resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_6f5u7")
+noise = SubResource("FastNoiseLite_cruy3")
 seamless = true
 as_normal_map = true
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n1yv3"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6oqxa"]
 resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_6f5u7")
+noise = SubResource("FastNoiseLite_cruy3")
 seamless = true
 as_normal_map = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ypu4"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3te1k"]
 resource_local_to_scene = true
 transparency = 1
 cull_mode = 2
@@ -140,29 +183,29 @@ depth_draw_mode = 1
 albedo_color = Color(0.30980393, 0.5411765, 0.8666667, 0.3882353)
 roughness = 0.0
 normal_enabled = true
-normal_texture = SubResource("NoiseTexture2D_c74ml")
+normal_texture = SubResource("NoiseTexture2D_m6i4j")
 refraction_enabled = true
-refraction_texture = SubResource("NoiseTexture2D_n1yv3")
+refraction_texture = SubResource("NoiseTexture2D_6oqxa")
 uv1_scale = Vector3(0.04, 0.04, 0.04)
 uv1_triplanar = true
 uv1_world_triplanar = true
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_c74ml"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wkx05"]
 resource_local_to_scene = true
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8ypu4"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jq1n1"]
 resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_c74ml")
+noise = SubResource("FastNoiseLite_wkx05")
 seamless = true
 as_normal_map = true
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cruy3"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ihq1n"]
 resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_c74ml")
+noise = SubResource("FastNoiseLite_wkx05")
 seamless = true
 as_normal_map = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m6i4j"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d660w"]
 resource_local_to_scene = true
 transparency = 1
 cull_mode = 2
@@ -170,12 +213,189 @@ depth_draw_mode = 1
 albedo_color = Color(0.30980393, 0.5411765, 0.8666667, 0.3882353)
 roughness = 0.0
 normal_enabled = true
-normal_texture = SubResource("NoiseTexture2D_8ypu4")
+normal_texture = SubResource("NoiseTexture2D_jq1n1")
 refraction_enabled = true
-refraction_texture = SubResource("NoiseTexture2D_cruy3")
+refraction_texture = SubResource("NoiseTexture2D_ihq1n")
 uv1_scale = Vector3(0.04, 0.04, 0.04)
 uv1_triplanar = true
 uv1_world_triplanar = true
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_cruy3"]
+data = PackedVector3Array(-2.5861816, -0.5, 2.3659668, -2.5861816, -0.5, -2.3659668, -2.5861816, 0.5, -2.3659668, 2.5861816, -0.5, -2.3659668, -2.5861816, -0.5, -2.3659668, -2.5861816, -0.5, 2.3659668, -2.5861816, 0.5, -2.3659668, -2.5861816, -0.5, -2.3659668, 2.5861816, -0.5, -2.3659668, -2.5861816, 0.5, -2.3659668, -2.5861816, 0.5, 2.3659668, -2.5861816, -0.5, 2.3659668, -2.5861816, -0.5, 2.3659668, -2.5861816, 0.5, 2.3659668, 2.5861816, 0.5, 2.3659668, 2.5861816, 0.5, 2.3659668, -2.5861816, 0.5, 2.3659668, -2.5861816, 0.5, -2.3659668, -2.5861816, -0.5, 2.3659668, 2.5861816, -0.5, 2.3659668, 2.5861816, -0.5, -2.3659668, 2.5861816, 0.5, 2.3659668, 2.5861816, -0.5, 2.3659668, -2.5861816, -0.5, 2.3659668, 2.5861816, -0.5, -2.3659668, 2.5861816, -0.5, 2.3659668, 2.5861816, 0.5, 2.3659668, 2.5861816, -0.5, -2.3659668, 2.5861816, 0.5, -2.3659668, -2.5861816, 0.5, -2.3659668, -2.5861816, 0.5, -2.3659668, 2.5861816, 0.5, -2.3659668, 2.5861816, 0.5, 2.3659668, 2.5861816, 0.5, 2.3659668, 2.5861816, 0.5, -2.3659668, 2.5861816, -0.5, -2.3659668)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_m6i4j"]
+_surfaces = [{
+"aabb": AABB(-2.5861816, -0.5, -2.3659668, 5.1723633, 1, 4.7319336),
+"attribute_data": PackedByteArray("AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("AIQlwAAAAL8AbBdAAIQlwAAAAL8AbBfAAIQlwAAAAD8AbBfAAIQlQAAAAL8AbBfAAIQlwAAAAL8AbBfAAIQlwAAAAL8AbBdAAIQlwAAAAD8AbBfAAIQlwAAAAL8AbBfAAIQlQAAAAL8AbBfAAIQlwAAAAD8AbBfAAIQlwAAAAD8AbBdAAIQlwAAAAL8AbBdAAIQlwAAAAL8AbBdAAIQlwAAAAD8AbBdAAIQlQAAAAD8AbBdAAIQlQAAAAD8AbBdAAIQlwAAAAD8AbBdAAIQlwAAAAD8AbBfAAIQlwAAAAL8AbBdAAIQlQAAAAL8AbBdAAIQlQAAAAL8AbBfAAIQlQAAAAD8AbBdAAIQlQAAAAL8AbBdAAIQlwAAAAL8AbBdAAIQlQAAAAL8AbBfAAIQlQAAAAL8AbBdAAIQlQAAAAD8AbBdAAIQlQAAAAL8AbBfAAIQlQAAAAD8AbBfAAIQlwAAAAD8AbBfAAIQlwAAAAD8AbBfAAIQlQAAAAD8AbBfAAIQlQAAAAD8AbBdAAIQlQAAAAD8AbBdAAIQlQAAAAD8AbBfAAIQlQAAAAL8AbBfAAAD/f/9//n8AAP9//3/+fwAA/3//f/5//38AAP//AAD/fwAA//8AAP9/AAD//wAA/////wAA/z//////AAD/P/////8AAP8/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8//3//////AAD/f/////8AAP9//////wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//////wAA/z//////AAD/P/////8AAP8//3//////AAD/f/////8AAP9//////wAA////f/9//n////9//3/+f////3//f/5/")
+}]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6oqxa"]
+albedo_texture = ExtResource("11_m6i4j")
+
+[sub_resource type="Animation" id="Animation_cruy3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3.4987962, -0.4352219, 17.258144)]
+}
+
+[sub_resource type="Animation" id="Animation_6oqxa"]
+resource_name = "up"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3.4987962, -0.4352219, 17.258144), Vector3(3.4987962, 32.772087, 17.258144)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3te1k"]
+_data = {
+&"RESET": SubResource("Animation_cruy3"),
+&"up": SubResource("Animation_6oqxa")
+}
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mnewx"]
+resource_local_to_scene = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ulhhn"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_mnewx")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_p4c8p"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_mnewx")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwirc"]
+resource_local_to_scene = true
+transparency = 1
+cull_mode = 2
+depth_draw_mode = 1
+albedo_color = Color(1, 1, 1, 0.3882353)
+roughness = 0.0
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_ulhhn")
+refraction_enabled = true
+refraction_texture = SubResource("NoiseTexture2D_p4c8p")
+uv1_scale = Vector3(0.04, 0.04, 0.04)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v31yl"]
+resource_local_to_scene = true
+size = Vector3(5.1601563, 3.310669, 4.837448)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_m6i4j"]
+data = PackedVector3Array(-1.5, -1, 2.5, -1.5, -1, -2.5, -1.5, 1, -2.5, 1.5, -1, -2.5, -1.5, -1, -2.5, -1.5, -1, 2.5, -1.5, 1, -2.5, -1.5, -1, -2.5, 1.5, -1, -2.5, -1.5, 1, -2.5, -1.5, 1, 2.5, -1.5, -1, 2.5, -1.5, -1, 2.5, -1.5, 1, 2.5, 1.5, 1, 2.5, 1.5, 1, 2.5, -1.5, 1, 2.5, -1.5, 1, -2.5, -1.5, -1, 2.5, 1.5, -1, 2.5, 1.5, -1, -2.5, 1.5, 1, 2.5, 1.5, -1, 2.5, -1.5, -1, 2.5, 1.5, -1, -2.5, 1.5, -1, 2.5, 1.5, 1, 2.5, 1.5, -1, -2.5, 1.5, 1, -2.5, -1.5, 1, -2.5, -1.5, 1, -2.5, 1.5, 1, -2.5, 1.5, 1, 2.5, 1.5, 1, 2.5, 1.5, 1, -2.5, 1.5, -1, -2.5)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6oqxa"]
+_surfaces = [{
+"aabb": AABB(-1.5, -1, -2.5, 3, 2, 5),
+"attribute_data": PackedByteArray("AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("AADAvwAAgL8AACBAAADAvwAAgL8AACDAAADAvwAAgD8AACDAAADAPwAAgL8AACDAAADAvwAAgL8AACDAAADAvwAAgL8AACBAAADAvwAAgD8AACDAAADAvwAAgL8AACDAAADAPwAAgL8AACDAAADAvwAAgD8AACDAAADAvwAAgD8AACBAAADAvwAAgL8AACBAAADAvwAAgL8AACBAAADAvwAAgD8AACBAAADAPwAAgD8AACBAAADAPwAAgD8AACBAAADAvwAAgD8AACBAAADAvwAAgD8AACDAAADAvwAAgL8AACBAAADAPwAAgL8AACBAAADAPwAAgL8AACDAAADAPwAAgD8AACBAAADAPwAAgL8AACBAAADAvwAAgL8AACBAAADAPwAAgL8AACDAAADAPwAAgL8AACBAAADAPwAAgD8AACBAAADAPwAAgL8AACDAAADAPwAAgD8AACDAAADAvwAAgD8AACDAAADAvwAAgD8AACDAAADAPwAAgD8AACDAAADAPwAAgD8AACBAAADAPwAAgD8AACBAAADAPwAAgD8AACDAAADAPwAAgL8AACDAAAD/f/9//n8AAP9//3/+fwAA/3//f/5//38AAP//AAD/fwAA//8AAP9/AAD//wAA/////wAA/z//////AAD/P/////8AAP8/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8//3//////AAD/f/////8AAP9//////wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//////wAA/z//////AAD/P/////8AAP8//3//////AAD/f/////8AAP9//////wAA////f/9//n////9//3/+f////3//f/5/")
+}]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3te1k"]
+data = PackedVector3Array(-0.45000002, -3.5, 0.45000002, -0.45000002, -3.5, -0.45000002, -0.45000002, 3.5, -0.45000002, 0.45000002, -3.5, -0.45000002, -0.45000002, -3.5, -0.45000002, -0.45000002, -3.5, 0.45000002, -0.45000002, 3.5, -0.45000002, -0.45000002, -3.5, -0.45000002, 0.45000002, -3.5, -0.45000002, -0.45000002, 3.5, -0.45000002, -0.45000002, 3.5, 0.45000002, -0.45000002, -3.5, 0.45000002, -0.45000002, -3.5, 0.45000002, -0.45000002, 3.5, 0.45000002, 0.45000002, 3.5, 0.45000002, 0.45000002, 3.5, 0.45000002, -0.45000002, 3.5, 0.45000002, -0.45000002, 3.5, -0.45000002, -0.45000002, -3.5, 0.45000002, 0.45000002, -3.5, 0.45000002, 0.45000002, -3.5, -0.45000002, 0.45000002, 3.5, 0.45000002, 0.45000002, -3.5, 0.45000002, -0.45000002, -3.5, 0.45000002, 0.45000002, -3.5, -0.45000002, 0.45000002, -3.5, 0.45000002, 0.45000002, 3.5, 0.45000002, 0.45000002, -3.5, -0.45000002, 0.45000002, 3.5, -0.45000002, -0.45000002, 3.5, -0.45000002, -0.45000002, 3.5, -0.45000002, 0.45000002, 3.5, -0.45000002, 0.45000002, 3.5, 0.45000002, 0.45000002, 3.5, 0.45000002, 0.45000002, 3.5, -0.45000002, 0.45000002, -3.5, -0.45000002)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_wkx05"]
+_surfaces = [{
+"aabb": AABB(-0.45000002, -3.5, -0.45000002, 0.90000004, 7, 0.90000004),
+"attribute_data": PackedByteArray("AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/"),
+"format": 34359738391,
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 36,
+"vertex_data": PackedByteArray("Z2bmvgAAYMBnZuY+Z2bmvgAAYMBnZua+Z2bmvgAAYEBnZua+Z2bmPgAAYMBnZua+Z2bmvgAAYMBnZua+Z2bmvgAAYMBnZuY+Z2bmvgAAYEBnZua+Z2bmvgAAYMBnZua+Z2bmPgAAYMBnZua+Z2bmvgAAYEBnZua+Z2bmvgAAYEBnZuY+Z2bmvgAAYMBnZuY+Z2bmvgAAYMBnZuY+Z2bmvgAAYEBnZuY+Z2bmPgAAYEBnZuY+Z2bmPgAAYEBnZuY+Z2bmvgAAYEBnZuY+Z2bmvgAAYEBnZua+Z2bmvgAAYMBnZuY+Z2bmPgAAYMBnZuY+Z2bmPgAAYMBnZua+Z2bmPgAAYEBnZuY+Z2bmPgAAYMBnZuY+Z2bmvgAAYMBnZuY+Z2bmPgAAYMBnZua+Z2bmPgAAYMBnZuY+Z2bmPgAAYEBnZuY+Z2bmPgAAYMBnZua+Z2bmPgAAYEBnZua+Z2bmvgAAYEBnZua+Z2bmvgAAYEBnZua+Z2bmPgAAYEBnZua+Z2bmPgAAYEBnZuY+Z2bmPgAAYEBnZuY+Z2bmPgAAYEBnZua+Z2bmPgAAYMBnZua+AAD/f/9//n8AAP9//3/+fwAA/3//f/5//38AAP//AAD/fwAA//8AAP9/AAD//wAA/////wAA/z//////AAD/P/////8AAP8/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8//3//////AAD/f/////8AAP9//////wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//////wAA/z//////AAD/P/////8AAP8//3//////AAD/f/////8AAP9//////wAA////f/9//n////9//3/+f////3//f/5/")
+}]
+
+[sub_resource type="Animation" id="Animation_3te1k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(30, 15.3, -12.900001)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.5707964, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_m6i4j"]
+resource_name = "boing"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(30, 15.3, -12.900001), Vector3(30, 15.3, -12.900001)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.5707964, 0, 0), Vector3(-0.56363654, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6oqxa"]
+_data = {
+&"RESET": SubResource("Animation_3te1k"),
+&"boing": SubResource("Animation_m6i4j")
+}
 
 [node name="World" type="Node3D" unique_id=1717920591]
 script = ExtResource("1_ql3sk")
@@ -203,11 +423,30 @@ spawn_path = NodePath("../SpawnContainer")
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1137082674]
 transform = Transform3D(-0.9615642, -0.1372901, 0.23779352, 4.4703487e-08, 0.8660254, 0.5, -0.27458027, 0.48078212, -0.832739, 1.5788616, 5.750045, -9.889214)
 
-[node name="debug_level" parent="." unique_id=967853051 instance=ExtResource("3_syp3n")]
+[node name="debug_level" parent="." unique_id=679879665 instance=ExtResource("3_syp3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11244774, 0.087500095, 0.054012537)
+script = ExtResource("4_n1yv3")
 
-[node name="player-reference" parent="debug_level" index="1" unique_id=1424144644]
+[node name="Cube" parent="debug_level" index="15" unique_id=15565463]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.005005, 0.44610977, 0.27717873)
+
+[node name="player-reference" parent="debug_level" index="18" unique_id=907252691]
 surface_material_override/0 = ExtResource("4_2f13d")
+
+[node name="robuddy" parent="debug_level/robuddy_base" parent_id_path=PackedInt32Array(679879665, 1252381236) index="0" unique_id=1727192426]
+surface_material_override/2 = ExtResource("6_n1yv3")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="debug_level/robuddy_base/robuddy" index="1" unique_id=382217284]
+transform = Transform3D(1.6697989, 0, -8.940697e-08, 0, 1.6697986, 0, 5.9604645e-08, 0, 1.6697989, 0.09120464, 3.3681464, 2.3310318)
+light_color = Color(0.078431375, 0.44705883, 1, 1)
+light_energy = 11.705
+shadow_enabled = true
+omni_range = 1.421
+omni_attenuation = -2.119
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="debug_level/robuddy_base/robuddy/OmniLight3D" unique_id=424404180]
+libraries/ = SubResource("AnimationLibrary_cruy3")
+autoplay = &"test"
 
 [node name="button" type="StaticBody3D" parent="." unique_id=268096522]
 script = SubResource("GDScript_gkrt5")
@@ -216,7 +455,7 @@ script = SubResource("GDScript_gkrt5")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
 billboard = 2
-text = "1"
+text = "MAX: 0 ACTUAL: 0"
 font_size = 128
 
 [node name="mesh" type="Node3D" parent="button" unique_id=818002015]
@@ -254,14 +493,76 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.452295, 1.5776978, 5.559057
 [node name="WaterMaker3D" parent="Water" unique_id=1288463309 instance=ExtResource("7_6f5u7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.382275, -9.898592, 11.968187)
 size = Vector3(25.64526, 16.132324, 27.432266)
-material = SubResource("StandardMaterial3D_8ypu4")
+material = SubResource("StandardMaterial3D_3te1k")
 
 [node name="WaterMaker3D2" parent="Water" unique_id=1458865344 instance=ExtResource("7_6f5u7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8721895, 6.7079296, 21.618773)
 size = Vector3(2.4875178, 49.345367, 3.0664845)
-material = SubResource("StandardMaterial3D_m6i4j")
+material = SubResource("StandardMaterial3D_d660w")
+
+[node name="Elevator" type="AnimatableBody3D" parent="." unique_id=1928637275]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4987962, -0.4352219, 17.258144)
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Elevator" unique_id=339849771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013427734, 0, 0.08227539)
+shape = SubResource("ConcavePolygonShape3D_cruy3")
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Elevator" unique_id=1395879684]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013427734, 0, 0.08227539)
+mesh = SubResource("ArrayMesh_m6i4j")
+surface_material_override/0 = SubResource("StandardMaterial3D_6oqxa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Elevator" unique_id=543197235]
+libraries/ = SubResource("AnimationLibrary_3te1k")
+
+[node name="CheckAllPlayers" parent="." unique_id=756501689 instance=ExtResource("11_cruy3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4987962, 1.7428422, 17.258144)
+size = Vector3(5.1601563, 3.310669, 4.837448)
+material = SubResource("StandardMaterial3D_lwirc")
+one_time = false
+amount_players_needed = 0
+
+[node name="CollisionShape3D" parent="CheckAllPlayers/CheckPlayersArea" parent_id_path=PackedInt32Array(756501689, 690338201) index="0" unique_id=1369684475]
+shape = SubResource("BoxShape3D_v31yl")
+
+[node name="Label3D" parent="CheckAllPlayers" index="1" unique_id=563407221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.5658264)
+text = "MAX: 0 ACTUAL: 0"
+
+[node name="Hammer" type="AnimatableBody3D" parent="." unique_id=489187845]
+transform = Transform3D(1, 0, 0, 0, -4.371138e-08, -0.9999998, 0, 0.9999998, -4.371138e-08, 30, 15.3, -12.900001)
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Hammer" unique_id=711960211]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.038004, 0.0402565)
+shape = SubResource("ConcavePolygonShape3D_m6i4j")
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Hammer" unique_id=1411236633]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.038004, 0.0402565)
+mesh = SubResource("ArrayMesh_6oqxa")
+
+[node name="CSGBakedCollisionShape3D2" type="CollisionShape3D" parent="Hammer" unique_id=879450130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.050001144, -3.538004, -0.0097436905)
+shape = SubResource("ConcavePolygonShape3D_3te1k")
+
+[node name="CSGBakedMeshInstance3D2" type="MeshInstance3D" parent="Hammer" unique_id=346138567]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.050001144, -3.538004, -0.0097436905)
+mesh = SubResource("ArrayMesh_wkx05")
+
+[node name="Marker3D" type="Marker3D" parent="Hammer" unique_id=20520394]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hammer" unique_id=1727815505]
+libraries/ = SubResource("AnimationLibrary_6oqxa")
+
+[node name="CheckPlayers" parent="." unique_id=1450361933 instance=ExtResource("11_cruy3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.87472, 6.7563252, -12.990064)
+size = Vector3(1.0508881, 2.0671387, 3.7287598)
+one_time = true
+amount_players_needed = 1
 
 [connection signal="interacted" from="button/InteractableComponent" to="button" method="_press"]
 [connection signal="timeout" from="BallSpawner/Timer" to="BallSpawner" method="_on_timer_timeout"]
+[connection signal="all_players_inside" from="CheckAllPlayers" to="Elevator/AnimationPlayer" method="play" binds= ["up"]]
+[connection signal="x_players_inside" from="CheckPlayers" to="Hammer/AnimationPlayer" method="play" binds= ["boing"]]
 
 [editable path="debug_level"]
+[editable path="CheckAllPlayers"]
