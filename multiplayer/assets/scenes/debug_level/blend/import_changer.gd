@@ -25,9 +25,9 @@ func _process_mesh(mesh_instance: MeshInstance3D) -> void:
 func spawn_object(mesh_instance : MeshInstance3D, object_to_spawn : PackedScene) -> void:
 			var new_object = object_to_spawn.instantiate()
 			mesh_instance.get_parent().add_child(new_object)
-			# Ponto inicial do raycast (um pouco acima)
+
 			var from := mesh_instance.global_position + Vector3.UP * 2.0
-			# Ponto final (para baixo)
+
 			var to := from + Vector3.DOWN * 20.0
 			var space_state = get_world_3d().direct_space_state
 			var query := PhysicsRayQueryParameters3D.create(from, to)
@@ -35,10 +35,8 @@ func spawn_object(mesh_instance : MeshInstance3D, object_to_spawn : PackedScene)
 			query.collide_with_bodies = true
 			var result := space_state.intersect_ray(query)
 			if result:
-				# Posiciona exatamente no ponto de colisão
-				new_object.global_position = result.position #+ Vector3(0, 0.5, 0)
+				new_object.global_position = result.position
 			else:
-				# fallback se não encontrou nada
 				new_object.global_position = mesh_instance.global_position
 			mesh_instance.hide()
 
