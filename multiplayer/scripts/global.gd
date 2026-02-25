@@ -13,21 +13,22 @@ const BALL_SHOOTER = preload("uid://60qftp8wow81")
 
 var spawn_players : Node3D
 
-#@rpc("any_peer", "call_local")
-#func pickup_item(player_peer : int, item_id : int) -> void:
-	#var player_node
-	#for i in spawn_players.get_children():
-		#if str(player_peer) == i.name:
-			#player_node = i
-	#match  item_id:
-		#1:
-			#var new_item = BALL_SHOOTER.instantiate()
-			#
-			#new_item.position = new_item._position
+@rpc("any_peer", "call_local")
+func pickup_item(player_peer : int, item_id : int) -> void:
+	var player_node 
+	for i in get_tree().get_nodes_in_group("Player"):
+		if i.name == str(player_peer):
+			print("oiii sou eu, ", i.name)
+			player_node = i
+			
+	match  item_id:
+		1:
+			var new_item = BALL_SHOOTER.instantiate()
+			new_item.position = Vector3(0, 2.5, 0)#new_item._position
 			#new_item.rotation = new_item._rotation
-			#new_item.pickable_item_id = item_id
-			#
-			#player_node.hand.add_child(new_item)
+			new_item.pickable_item_id = item_id
+			#player_node.hand.add_child(new_item, true)
+			spawn_container.add_child(new_item, true)
 
 @rpc("any_peer", "call_local")
 func drop_item(item_id : int, position : Vector3, rotation : Vector3) -> void:

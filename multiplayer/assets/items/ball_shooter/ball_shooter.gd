@@ -4,7 +4,7 @@ extends Item
 
 func item_drop_item() -> void:
 	Global.drop_item.rpc_id(1, pickable_item_id, hand.player.global_position, rotation)
-	queue_free()
+	
 
 func item_pull_trigger() -> void:
 	shoot()

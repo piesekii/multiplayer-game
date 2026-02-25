@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c61ohvkv3k1xx" path="res://assets/enviroment/speedchecker/speedchecker.tscn" id="7_m6i4j"]
 [ext_resource type="PackedScene" uid="uid://dwlh8cpenawp5" path="res://assets/enviroment/checkPlayers/checkPlayers.tscn" id="11_cruy3"]
 [ext_resource type="Texture2D" uid="uid://yd2jor1ehbfj" path="res://assets/scenes/textures/kenney_prototype-textures/PNG/Orange/texture_08.png" id="11_m6i4j"]
+[ext_resource type="PackedScene" uid="uid://cody1i55q7p7k" path="res://assets/items/ball_shooter/pickable_ball_shooter.tscn" id="13_6oqxa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sdugn"]
 sky_top_color = Color(0.6752427, 0.19323969, 0.7188246, 1)
@@ -144,22 +145,22 @@ _data = {
 &"press": SubResource("Animation_c5fcp")
 }
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_m6i4j"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6oqxa"]
 resource_local_to_scene = true
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6oqxa"]
-resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_m6i4j")
-seamless = true
-as_normal_map = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3te1k"]
 resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_m6i4j")
+noise = SubResource("FastNoiseLite_6oqxa")
 seamless = true
 as_normal_map = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wkx05"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wkx05"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_6oqxa")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jq1n1"]
 resource_local_to_scene = true
 transparency = 1
 cull_mode = 2
@@ -167,29 +168,29 @@ depth_draw_mode = 1
 albedo_color = Color(0.30980393, 0.5411765, 0.8666667, 0.3882353)
 roughness = 0.0
 normal_enabled = true
-normal_texture = SubResource("NoiseTexture2D_6oqxa")
+normal_texture = SubResource("NoiseTexture2D_3te1k")
 refraction_enabled = true
-refraction_texture = SubResource("NoiseTexture2D_3te1k")
+refraction_texture = SubResource("NoiseTexture2D_wkx05")
 uv1_scale = Vector3(0.04, 0.04, 0.04)
 uv1_triplanar = true
 uv1_world_triplanar = true
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_jq1n1"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ihq1n"]
 resource_local_to_scene = true
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ihq1n"]
-resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_jq1n1")
-seamless = true
-as_normal_map = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d660w"]
 resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_jq1n1")
+noise = SubResource("FastNoiseLite_ihq1n")
 seamless = true
 as_normal_map = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnewx"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mnewx"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_ihq1n")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ulhhn"]
 resource_local_to_scene = true
 transparency = 1
 cull_mode = 2
@@ -197,9 +198,9 @@ depth_draw_mode = 1
 albedo_color = Color(0.30980393, 0.5411765, 0.8666667, 0.3882353)
 roughness = 0.0
 normal_enabled = true
-normal_texture = SubResource("NoiseTexture2D_ihq1n")
+normal_texture = SubResource("NoiseTexture2D_d660w")
 refraction_enabled = true
-refraction_texture = SubResource("NoiseTexture2D_d660w")
+refraction_texture = SubResource("NoiseTexture2D_mnewx")
 uv1_scale = Vector3(0.04, 0.04, 0.04)
 uv1_triplanar = true
 uv1_world_triplanar = true
@@ -258,22 +259,22 @@ _data = {
 &"up": SubResource("Animation_6oqxa")
 }
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ulhhn"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_p4c8p"]
 resource_local_to_scene = true
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_p4c8p"]
-resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_ulhhn")
-seamless = true
-as_normal_map = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lwirc"]
 resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_ulhhn")
+noise = SubResource("FastNoiseLite_p4c8p")
 seamless = true
 as_normal_map = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v31yl"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v31yl"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_p4c8p")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1tui"]
 resource_local_to_scene = true
 transparency = 1
 cull_mode = 2
@@ -281,14 +282,14 @@ depth_draw_mode = 1
 albedo_color = Color(1, 1, 1, 0.3882353)
 roughness = 0.0
 normal_enabled = true
-normal_texture = SubResource("NoiseTexture2D_p4c8p")
+normal_texture = SubResource("NoiseTexture2D_lwirc")
 refraction_enabled = true
-refraction_texture = SubResource("NoiseTexture2D_lwirc")
+refraction_texture = SubResource("NoiseTexture2D_v31yl")
 uv1_scale = Vector3(0.04, 0.04, 0.04)
 uv1_triplanar = true
 uv1_world_triplanar = true
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_i1tui"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_spnw2"]
 resource_local_to_scene = true
 size = Vector3(5.1601563, 3.310669, 4.837448)
 
@@ -318,17 +319,17 @@ spawn_path = NodePath("../SpawnContainer")
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1137082674]
 transform = Transform3D(-0.9615642, -0.1372901, 0.23779352, 4.4703487e-08, 0.8660254, 0.5, -0.27458027, 0.48078212, -0.832739, 1.5788616, 5.750045, -9.889214)
 
-[node name="debug_level" parent="." unique_id=730971560 instance=ExtResource("3_syp3n")]
+[node name="debug_level" parent="." unique_id=321523845 instance=ExtResource("3_syp3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11244774, 0.087500095, 0.054012537)
 script = ExtResource("4_n1yv3")
 
-[node name="player-reference" parent="debug_level" index="18" unique_id=1642338975]
+[node name="player-reference" parent="debug_level" index="18" unique_id=479628430]
 surface_material_override/0 = ExtResource("4_2f13d")
 
-[node name="Cube" parent="debug_level" index="23" unique_id=1121380734]
+[node name="Cube" parent="debug_level" index="23" unique_id=1998548339]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.005005, 0.44610977, 0.27717873)
 
-[node name="robuddy" parent="debug_level/robuddy_base" parent_id_path=PackedInt32Array(730971560, 1654831903) index="0" unique_id=313739752]
+[node name="robuddy" parent="debug_level/robuddy_base" parent_id_path=PackedInt32Array(321523845, 1365590671) index="0" unique_id=2078245503]
 surface_material_override/2 = ExtResource("6_n1yv3")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="debug_level/robuddy_base/robuddy" index="1" unique_id=382217284]
@@ -384,12 +385,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.452295, 1.5776978, 5.559057
 [node name="WaterMaker3D" parent="Water" unique_id=1288463309 instance=ExtResource("7_6f5u7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.382275, -9.898592, 11.968187)
 size = Vector3(25.64526, 16.132324, 27.432266)
-material = SubResource("StandardMaterial3D_wkx05")
+material = SubResource("StandardMaterial3D_jq1n1")
 
 [node name="WaterMaker3D2" parent="Water" unique_id=1458865344 instance=ExtResource("7_6f5u7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8721895, 6.7079296, 21.618773)
 size = Vector3(2.4875178, 49.345367, 3.0664845)
-material = SubResource("StandardMaterial3D_mnewx")
+material = SubResource("StandardMaterial3D_ulhhn")
 
 [node name="Elevator" type="AnimatableBody3D" parent="." unique_id=1928637275]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4987962, -0.4352219, 17.258144)
@@ -409,12 +410,12 @@ libraries/ = SubResource("AnimationLibrary_3te1k")
 [node name="CheckAllPlayers" parent="." unique_id=756501689 instance=ExtResource("11_cruy3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4987962, 1.7428422, 17.258144)
 size = Vector3(5.1601563, 3.310669, 4.837448)
-material = SubResource("StandardMaterial3D_v31yl")
+material = SubResource("StandardMaterial3D_i1tui")
 one_time = false
 amount_players_needed = 0
 
 [node name="CollisionShape3D" parent="CheckAllPlayers/CheckPlayersArea" parent_id_path=PackedInt32Array(756501689, 690338201) index="0" unique_id=1369684475]
-shape = SubResource("BoxShape3D_i1tui")
+shape = SubResource("BoxShape3D_spnw2")
 
 [node name="Label3D" parent="CheckAllPlayers" index="1" unique_id=563407221]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.5658264)
@@ -425,6 +426,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.87472, 6.7563252, -12.9900
 size = Vector3(1.0508881, 2.0671387, 3.7287598)
 one_time = true
 amount_players_needed = 1
+
+[node name="pickable_ball_shooter" parent="." unique_id=103456761 instance=ExtResource("13_6oqxa")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 3.868269, 0.2646944, 0.43669605)
+
+[node name="pickable_ball_shooter2" parent="." unique_id=898730968 instance=ExtResource("13_6oqxa")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 4.0715046, 0.26469487, -4.5389223)
 
 [connection signal="interacted" from="button/InteractableComponent" to="button" method="_press"]
 [connection signal="all_players_inside" from="CheckAllPlayers" to="Elevator/AnimationPlayer" method="play" binds= ["up"]]

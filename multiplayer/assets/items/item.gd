@@ -14,9 +14,9 @@ signal signal_drop_item
 @export var _scale : Vector3
 
 func _ready() -> void:
-	position = _position
-	rotation = _rotation
-	scale = _scale
+	#position = _position
+	#rotation = _rotation
+	#scale = _scale
 	signal_pull_trigger.connect(item_pull_trigger)
 	signal_released_trigger.connect(item_release_trigger)
 	signal_drop_item.connect(item_drop_item)

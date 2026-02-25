@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://bjxvdtebxa6oi" path="res://assets/scenes/textures/kenney_prototype-textures/Vector/texture_01.svg" id="2_t5tjm"]
 [ext_resource type="Script" uid="uid://cpl766j566gx2" path="res://assets/scenes/player/hand.gd" id="3_qawdr"]
 [ext_resource type="Texture2D" uid="uid://pxj3b3e28fg3" path="res://addons/tube/inspector/icons/clipboard_icon.tres" id="3_t5tjm"]
-[ext_resource type="PackedScene" uid="uid://60qftp8wow81" path="res://assets/items/ball_shooter/ball_shooter.tscn" id="4_qun0j"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3cnex"]
 
@@ -118,8 +117,6 @@ collide_with_areas = true
 [node name="Hand" type="Node3D" parent="HeadOriginalPosition/Head/Camera3D" unique_id=1118125194]
 unique_name_in_owner = true
 script = ExtResource("3_qawdr")
-
-[node name="ball_shooter" parent="HeadOriginalPosition/Head/Camera3D/Hand" unique_id=670117112 instance=ExtResource("4_qun0j")]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1788257273]
 replication_config = SubResource("SceneReplicationConfig_ratu8")
