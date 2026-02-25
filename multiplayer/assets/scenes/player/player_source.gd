@@ -1,6 +1,12 @@
 class_name Player
 extends CharacterBody3D
 
+@onready var label_session: Label = %LabelSession
+@onready var button_leave: Button = %ButtonLeave
+@onready var button_copy_session: Button = %ButtonCopySession
+
+@onready var hand: Node3D = %Hand
+
 # Ground movement settings
 @export_group("land movement")
 @export var jump_velocity := 6.0
@@ -29,7 +35,6 @@ extends CharacterBody3D
 @onready var camera_3d: Camera3D = %Camera3D
 @onready var nameplate: Label3D = %nameplate
 @onready var menu: Control = %Menu
-@onready var button_leave: Button = %ButtonLeave
 @onready var shapecast_interactable: ShapeCast3D = %ShapeCastInteractable
 @onready var head: Node3D = %Head
 
@@ -39,6 +44,8 @@ const CROUCH_JUMP_ADD = CROUCH_TRANSLATE * 0.5
 var is_crouched := false
 var is_swimming := false
 
+var immobile := false
+
 var last_checkpoint_pos : Vector3
 
 const HEADBOB_MOVE_AMOUNT = 0.06
@@ -46,6 +53,10 @@ const HEADBOB_FREQUENCY = 2.4
 var headbob_time := 0.0
 var wish_dir := Vector3.ZERO
 var cam_aligned_wish_dir := Vector3.ZERO
+
+var noclip_scroll_step := 1.0
+var noclip_speed_mult := 3.0
+var noclip := false
 
 var health: float = 100:
 	set(new_value):
@@ -64,22 +75,34 @@ func _ready():
 		%health.hide()
 		set_process(false)
 		set_physics_process(false)
-		
+		%WorldModel.show()
 		return
+	
+	label_session.text = Network.tube_client.session_id
 	%WorldModel.hide()
 	camera_3d.current = true
 	button_leave.pressed.connect(func(): Network.leave_server())
+	button_copy_session.pressed.connect(func(): DisplayServer.clipboard_set(Network.tube_client.session_id))
+	DisplayServer.clipboard_set(Network.tube_client.session_id)
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("menu") and menu.visible == false:
+
+func open_menu(current_visibility: bool):
+	menu.visible = !current_visibility
+	immobile = menu.visible
+	if menu.visible:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		menu.show()
-	elif Input.is_action_just_pressed("menu") and menu.visible == true:
+	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		menu.hide()
+
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("menu"): open_menu(menu.visible)
+	
 	if get_interactable_component_at_shapecast():
 		if Input.is_action_just_pressed("interact"):
-			get_interactable_component_at_shapecast().interact_with()
+			get_interactable_component_at_shapecast().interact_with(self)
+	
+
 	%health.text = str(health)
 	
 func _physics_process(delta):
@@ -87,17 +110,18 @@ func _physics_process(delta):
 	# Depending on which way you have you character facing, you may have to negate the input directions
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 	cam_aligned_wish_dir = camera_3d.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
-
-	if not _handle_water_physics(delta):
-		if is_on_floor():
-			if Input.is_action_just_pressed("jump") or (auto_bhop and Input.is_action_pressed("jump")):
-				self.velocity.y = jump_velocity
-			_handle_ground_physics(delta)
-		else:
-			_handle_air_physics(delta)
+	
+	if not _handle_noclip(delta):
+		if not _handle_water_physics(delta):
+			if is_on_floor():
+				if Input.is_action_just_pressed("jump") or (auto_bhop and Input.is_action_pressed("jump")):
+					self.velocity.y = jump_velocity
+				_handle_ground_physics(delta)
+			else:
+				_handle_air_physics(delta)
 		
-	_handle_crouch(delta)
-	move_and_slide()
+		_handle_crouch(delta)
+		move_and_slide()
 
 func _handle_air_physics(delta) -> void:
 	self.velocity.y -= ProjectSettings.get_setting("physics/3d/default_gravity") * delta
@@ -127,6 +151,8 @@ func _handle_air_physics(delta) -> void:
 			self.motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED
 		clip_velocity(get_wall_normal(), 1, delta) # Allows surf
 
+var total_speed : float
+
 func _handle_ground_physics(delta) -> void:
 	# Similar to the air movement. Acceleration and friction on ground.
 	var cur_speed_in_wish_dir = self.velocity.dot(wish_dir)
@@ -143,12 +169,34 @@ func _handle_ground_physics(delta) -> void:
 	if self.velocity.length() > 0:
 		new_speed /= self.velocity.length()
 	self.velocity *= new_speed
-	
+	total_speed = velocity.length()
 	_headbob_effect(delta)
+
+func _handle_noclip(_delta) -> bool:
+	if Input.is_action_just_pressed("_noclip"):
+		noclip = !noclip
+		noclip_speed_mult = 3.0
+	cs_standing.disabled = noclip
+	
+	if not noclip:
+		return false
+	
+	var speed = get_move_speed() * noclip_speed_mult
+	if Input.is_action_pressed("sprint"):
+		speed += 3.0
+	
+	self.velocity = cam_aligned_wish_dir * speed
+	global_position += self.velocity * _delta
+	return true
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			noclip_speed_mult += noclip_scroll_step
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			noclip_speed_mult -= noclip_scroll_step
+			noclip_speed_mult = max(noclip_speed_mult, 0.1)
 	elif event.is_action_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
@@ -157,7 +205,9 @@ func _unhandled_input(event):
 			rotate_y(-event.relative.x * look_sensitivity)
 			%Camera3D.rotate_x(-event.relative.y * look_sensitivity)
 			%Camera3D.rotation.x = clamp(%Camera3D.rotation.x, deg_to_rad(-90), deg_to_rad(90))
-			
+	
+
+			noclip_speed_mult = max(noclip_speed_mult, 0.1)
 @onready var body: MeshInstance3D = %body
 @onready var bodycrouched: MeshInstance3D = %bodycrouched
 @onready var _original_capsule_height = cs_standing.shape.height
@@ -230,7 +280,7 @@ func _headbob_effect(delta):
 #func _process(delta):
 	#_handle_controller_look_input(delta)
 
-func clip_velocity(normal: Vector3, overbounce : float, delta : float) -> void:
+func clip_velocity(normal: Vector3, overbounce : float, _delta : float) -> void:
 	# When strafing into wall, + gravity, velocity will be pointing much in the opposite direction of the normal
 	# So with this code, we will back up and off of the wall, cancelling out our strafe + gravity, allowing surf.
 	var backoff := self.velocity.dot(normal) * overbounce
@@ -254,7 +304,6 @@ func is_surface_too_steep(normal : Vector3) -> bool:
 		return true
 	return false
 
-
 func get_move_speed() -> float:
 	if is_swimming:
 		return walk_speed * 0.8
@@ -270,3 +319,7 @@ func get_interactable_component_at_shapecast() -> InteractableComponent:
 			if shapecast_interactable.get_collider(i).get_node_or_null('InteractableComponent') is InteractableComponent:
 				return shapecast_interactable.get_collider(i).get_node_or_null('InteractableComponent')
 	return null
+
+
+func _on_multiplayer_spawner_spawned(node: Node) -> void:
+	print("AA")

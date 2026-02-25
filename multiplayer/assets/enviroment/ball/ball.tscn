@@ -20,20 +20,65 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath("AnimationPlayer:current_animation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("MeshInstance3D:scale")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_i4d2y"]
 radius = 0.5901619
 
-[node name="Ball" type="RigidBody3D" unique_id=353820732]
+[sub_resource type="Animation" id="Animation_7fnji"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.1, 0.1, 0.1)]
+}
+
+[sub_resource type="Animation" id="Animation_rk74b"]
+resource_name = "spawn"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.1, 0.1, 0.1), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pao0e"]
+_data = {
+&"RESET": SubResource("Animation_7fnji"),
+&"spawn": SubResource("Animation_rk74b")
+}
+
+[node name="Ball" type="RigidBody3D" unique_id=1303692791]
 collision_layer = 2
 collision_mask = 3
 mass = 3.0
 script = ExtResource("1_3jt7b")
+metadata/_custom_type_script = "uid://cpymhnhya216k"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=246739764]
 shape = SubResource("SphereShape3D_w3qld")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1602974732]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 mesh = SubResource("SphereMesh_i4d2y")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=2015659835]
@@ -51,3 +96,7 @@ unique_name_in_owner = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1137501801]
 shape = SubResource("SphereShape3D_i4d2y")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=800253794]
+libraries/ = SubResource("AnimationLibrary_pao0e")
+autoplay = &"spawn"

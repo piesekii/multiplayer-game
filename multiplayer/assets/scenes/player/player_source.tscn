@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://ddw8nuqbbq7ea" path="res://assets/scenes/player/player_source.gd" id="1_cq2aa"]
 [ext_resource type="Texture2D" uid="uid://bjxvdtebxa6oi" path="res://assets/scenes/textures/kenney_prototype-textures/Vector/texture_01.svg" id="2_t5tjm"]
+[ext_resource type="Script" uid="uid://cpl766j566gx2" path="res://assets/scenes/player/hand.gd" id="3_qawdr"]
+[ext_resource type="Texture2D" uid="uid://pxj3b3e28fg3" path="res://addons/tube/inspector/icons/clipboard_icon.tres" id="3_t5tjm"]
+[ext_resource type="PackedScene" uid="uid://60qftp8wow81" path="res://assets/items/ball_shooter/ball_shooter.tscn" id="4_qun0j"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3cnex"]
 
@@ -58,6 +61,7 @@ properties/6/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" unique_id=251699600]
 script = ExtResource("1_cq2aa")
+air_cap = 0.45
 
 [node name="cs_standing" type="CollisionShape3D" parent="." unique_id=851096930]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -89,6 +93,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.1920929e-07)
 [node name="WorldModel" type="Node3D" parent="HeadOriginalPosition/Head/Camera3D" unique_id=208783595]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.1920929e-07)
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="HeadOriginalPosition/Head/Camera3D/WorldModel" unique_id=1594965356]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.8)
@@ -109,6 +114,12 @@ shape = SubResource("SphereShape3D_ratu8")
 target_position = Vector3(0, -1.905, 0)
 max_results = 5
 collide_with_areas = true
+
+[node name="Hand" type="Node3D" parent="HeadOriginalPosition/Head/Camera3D" unique_id=1118125194]
+unique_name_in_owner = true
+script = ExtResource("3_qawdr")
+
+[node name="ball_shooter" parent="HeadOriginalPosition/Head/Camera3D/Hand" unique_id=670117112 instance=ExtResource("4_qun0j")]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=1788257273]
 replication_config = SubResource("SceneReplicationConfig_ratu8")
@@ -145,7 +156,24 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="ButtonLeave" type="Button" parent="PlayerMenu/Menu/PanelContainer/MarginContainer" unique_id=759439976]
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerMenu/Menu/PanelContainer/MarginContainer" unique_id=1399648027]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerMenu/Menu/PanelContainer/MarginContainer/VBoxContainer" unique_id=1977345959]
+layout_mode = 2
+
+[node name="LabelSession" type="Label" parent="PlayerMenu/Menu/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=914352642]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ButtonCopySession" type="Button" parent="PlayerMenu/Menu/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1069548548]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/icon_max_width = 24
+icon = ExtResource("3_t5tjm")
+
+[node name="ButtonLeave" type="Button" parent="PlayerMenu/Menu/PanelContainer/MarginContainer/VBoxContainer" unique_id=759439976]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Sair do jogo"
@@ -162,3 +190,5 @@ offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "100"
+
+[connection signal="child_entered_tree" from="HeadOriginalPosition/Head/Camera3D/Hand" to="HeadOriginalPosition/Head/Camera3D/Hand" method="_on_child_entered_tree"]

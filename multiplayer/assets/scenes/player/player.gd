@@ -38,7 +38,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera_3d.rotate_x(-event.relative.y * sensitivity)
 		camera_3d.rotation.x = clamp(camera_3d.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("menu") and menu.visible == false:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		menu.show()
@@ -48,9 +48,9 @@ func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("left_click"):
 		shoot()
-	if get_interactable_component_at_shapecast():
-		if Input.is_action_just_pressed("interact"):
-			get_interactable_component_at_shapecast().interact_with()
+	#if get_interactable_component_at_shapecast():
+		#if Input.is_action_just_pressed("interact"):
+			#get_interactable_component_at_shapecast().interact_with()
 
 
 func _physics_process(delta: float) -> void:

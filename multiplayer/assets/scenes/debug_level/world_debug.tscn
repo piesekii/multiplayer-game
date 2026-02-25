@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dfy0wfxd6eihf" path="res://scripts/global.gd" id="6_c5fcp"]
 [ext_resource type="Material" uid="uid://c2y8qfrfql022" path="res://assets/shaders/materials/face_television_material.tres" id="6_n1yv3"]
 [ext_resource type="PackedScene" uid="uid://ca0wevg1lb4rx" path="res://assets/enviroment/water/WaterMaker3D/WaterMaker3D.tscn" id="7_6f5u7"]
+[ext_resource type="PackedScene" uid="uid://c61ohvkv3k1xx" path="res://assets/enviroment/speedchecker/speedchecker.tscn" id="7_m6i4j"]
 [ext_resource type="PackedScene" uid="uid://dwlh8cpenawp5" path="res://assets/enviroment/checkPlayers/checkPlayers.tscn" id="11_cruy3"]
 [ext_resource type="Texture2D" uid="uid://yd2jor1ehbfj" path="res://assets/scenes/textures/kenney_prototype-textures/PNG/Orange/texture_08.png" id="11_m6i4j"]
 
@@ -83,7 +84,7 @@ script/source = "extends StaticBody3D
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 
 var counter := 1
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	counter = Global.counter
 	%Label3D.text = str(counter)
 
@@ -143,39 +144,22 @@ _data = {
 &"press": SubResource("Animation_c5fcp")
 }
 
-[sub_resource type="GDScript" id="GDScript_2f13d"]
-resource_name = "BallShooter"
-script/source = "extends Node3D
-
-
-func shoot():
-	var facing_dir = Vector3(0,0, 1)
-	var force = randi_range(90, 110)
-	var pos = global_position
-	Global.shoot_ball(pos, facing_dir, force)
-
-
-func _on_timer_timeout() -> void:
-	#shoot()
-	pass
-"
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_cruy3"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_m6i4j"]
 resource_local_to_scene = true
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_m6i4j"]
-resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_cruy3")
-seamless = true
-as_normal_map = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6oqxa"]
 resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_cruy3")
+noise = SubResource("FastNoiseLite_m6i4j")
 seamless = true
 as_normal_map = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3te1k"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3te1k"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_m6i4j")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wkx05"]
 resource_local_to_scene = true
 transparency = 1
 cull_mode = 2
@@ -183,29 +167,29 @@ depth_draw_mode = 1
 albedo_color = Color(0.30980393, 0.5411765, 0.8666667, 0.3882353)
 roughness = 0.0
 normal_enabled = true
-normal_texture = SubResource("NoiseTexture2D_m6i4j")
+normal_texture = SubResource("NoiseTexture2D_6oqxa")
 refraction_enabled = true
-refraction_texture = SubResource("NoiseTexture2D_6oqxa")
+refraction_texture = SubResource("NoiseTexture2D_3te1k")
 uv1_scale = Vector3(0.04, 0.04, 0.04)
 uv1_triplanar = true
 uv1_world_triplanar = true
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_wkx05"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jq1n1"]
 resource_local_to_scene = true
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jq1n1"]
-resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_wkx05")
-seamless = true
-as_normal_map = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ihq1n"]
 resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_wkx05")
+noise = SubResource("FastNoiseLite_jq1n1")
 seamless = true
 as_normal_map = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d660w"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d660w"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_jq1n1")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnewx"]
 resource_local_to_scene = true
 transparency = 1
 cull_mode = 2
@@ -213,9 +197,9 @@ depth_draw_mode = 1
 albedo_color = Color(0.30980393, 0.5411765, 0.8666667, 0.3882353)
 roughness = 0.0
 normal_enabled = true
-normal_texture = SubResource("NoiseTexture2D_jq1n1")
+normal_texture = SubResource("NoiseTexture2D_ihq1n")
 refraction_enabled = true
-refraction_texture = SubResource("NoiseTexture2D_ihq1n")
+refraction_texture = SubResource("NoiseTexture2D_d660w")
 uv1_scale = Vector3(0.04, 0.04, 0.04)
 uv1_triplanar = true
 uv1_world_triplanar = true
@@ -274,22 +258,22 @@ _data = {
 &"up": SubResource("Animation_6oqxa")
 }
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_mnewx"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ulhhn"]
 resource_local_to_scene = true
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ulhhn"]
-resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_mnewx")
-seamless = true
-as_normal_map = true
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_p4c8p"]
 resource_local_to_scene = true
-noise = SubResource("FastNoiseLite_mnewx")
+noise = SubResource("FastNoiseLite_ulhhn")
 seamless = true
 as_normal_map = true
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwirc"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lwirc"]
+resource_local_to_scene = true
+noise = SubResource("FastNoiseLite_ulhhn")
+seamless = true
+as_normal_map = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v31yl"]
 resource_local_to_scene = true
 transparency = 1
 cull_mode = 2
@@ -297,95 +281,16 @@ depth_draw_mode = 1
 albedo_color = Color(1, 1, 1, 0.3882353)
 roughness = 0.0
 normal_enabled = true
-normal_texture = SubResource("NoiseTexture2D_ulhhn")
+normal_texture = SubResource("NoiseTexture2D_p4c8p")
 refraction_enabled = true
-refraction_texture = SubResource("NoiseTexture2D_p4c8p")
+refraction_texture = SubResource("NoiseTexture2D_lwirc")
 uv1_scale = Vector3(0.04, 0.04, 0.04)
 uv1_triplanar = true
 uv1_world_triplanar = true
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_v31yl"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_i1tui"]
 resource_local_to_scene = true
 size = Vector3(5.1601563, 3.310669, 4.837448)
-
-[sub_resource type="GDScript" id="GDScript_cruy3"]
-resource_name = "martelo"
-script/source = "extends Node3D
-
-@export var rotation_speed := 180.0 # graus por segundo
-@export var knockback_force := 25.0
-@export var upward_force := 6.0
-
-@onready var pivot := $Hammer
-@onready var hit_area := $Hammer/Area3D
-
-
-func _physics_process(delta):
-	pivot.rotate_y(deg_to_rad(rotation_speed) * delta)
-
-
-func _ready():
-	hit_area.body_entered.connect(_on_body_entered)
-
-
-func _on_body_entered(body):
-	if body is CharacterBody3D:
-		apply_knockback(body)
-
-
-func apply_knockback(player: CharacterBody3D):
-
-	# Centro do giro
-	var center = pivot.global_position
-	
-	# Direção do centro até o player (raio)
-	var radial_dir = (player.global_position - center)
-	radial_dir.y = 0
-	radial_dir = radial_dir.normalized()
-
-	# Eixo de rotação (Y porque estamos girando em Y)
-	var rotation_axis := Vector3.UP
-
-	# Tangente correta (produto vetorial)
-	var tangent := rotation_axis.cross(radial_dir).normalized()
-
-	# Se rotação for negativa, inverter direção
-	if rotation_speed < 0:
-		tangent = -tangent
-
-	var impulse := tangent * knockback_force
-	impulse.y = upward_force
-
-	player.velocity = impulse
-"
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_cruy3"]
-size = Vector3(3.588379, 3.2139282, 5.843506)
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_6oqxa"]
-_surfaces = [{
-"aabb": AABB(-1.5, -1, -2.5, 3, 2, 5),
-"attribute_data": PackedByteArray("AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/"),
-"format": 34359738391,
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 36,
-"vertex_data": PackedByteArray("AADAvwAAgL8AACBAAADAvwAAgL8AACDAAADAvwAAgD8AACDAAADAPwAAgL8AACDAAADAvwAAgL8AACDAAADAvwAAgL8AACBAAADAvwAAgD8AACDAAADAvwAAgL8AACDAAADAPwAAgL8AACDAAADAvwAAgD8AACDAAADAvwAAgD8AACBAAADAvwAAgL8AACBAAADAvwAAgL8AACBAAADAvwAAgD8AACBAAADAPwAAgD8AACBAAADAPwAAgD8AACBAAADAvwAAgD8AACBAAADAvwAAgD8AACDAAADAvwAAgL8AACBAAADAPwAAgL8AACBAAADAPwAAgL8AACDAAADAPwAAgD8AACBAAADAPwAAgL8AACBAAADAvwAAgL8AACBAAADAPwAAgL8AACDAAADAPwAAgL8AACBAAADAPwAAgD8AACBAAADAPwAAgL8AACDAAADAPwAAgD8AACDAAADAvwAAgD8AACDAAADAvwAAgD8AACDAAADAPwAAgD8AACDAAADAPwAAgD8AACBAAADAPwAAgD8AACBAAADAPwAAgD8AACDAAADAPwAAgL8AACDAAAD/f/9//n8AAP9//3/+fwAA/3//f/5//38AAP//AAD/fwAA//8AAP9/AAD//wAA/////wAA/z//////AAD/P/////8AAP8/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8//3//////AAD/f/////8AAP9//////wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//////wAA/z//////AAD/P/////8AAP8//3//////AAD/f/////8AAP9//////wAA////f/9//n////9//3/+f////3//f/5/")
-}]
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3te1k"]
-data = PackedVector3Array(-0.45000002, -3.5, 0.45000002, -0.45000002, -3.5, -0.45000002, -0.45000002, 3.5, -0.45000002, 0.45000002, -3.5, -0.45000002, -0.45000002, -3.5, -0.45000002, -0.45000002, -3.5, 0.45000002, -0.45000002, 3.5, -0.45000002, -0.45000002, -3.5, -0.45000002, 0.45000002, -3.5, -0.45000002, -0.45000002, 3.5, -0.45000002, -0.45000002, 3.5, 0.45000002, -0.45000002, -3.5, 0.45000002, -0.45000002, -3.5, 0.45000002, -0.45000002, 3.5, 0.45000002, 0.45000002, 3.5, 0.45000002, 0.45000002, 3.5, 0.45000002, -0.45000002, 3.5, 0.45000002, -0.45000002, 3.5, -0.45000002, -0.45000002, -3.5, 0.45000002, 0.45000002, -3.5, 0.45000002, 0.45000002, -3.5, -0.45000002, 0.45000002, 3.5, 0.45000002, 0.45000002, -3.5, 0.45000002, -0.45000002, -3.5, 0.45000002, 0.45000002, -3.5, -0.45000002, 0.45000002, -3.5, 0.45000002, 0.45000002, 3.5, 0.45000002, 0.45000002, -3.5, -0.45000002, 0.45000002, 3.5, -0.45000002, -0.45000002, 3.5, -0.45000002, -0.45000002, 3.5, -0.45000002, 0.45000002, 3.5, -0.45000002, 0.45000002, 3.5, 0.45000002, 0.45000002, 3.5, 0.45000002, 0.45000002, 3.5, -0.45000002, 0.45000002, -3.5, -0.45000002)
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_wkx05"]
-_surfaces = [{
-"aabb": AABB(-0.45000002, -3.5, -0.45000002, 0.90000004, 7, 0.90000004),
-"attribute_data": PackedByteArray("AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAgD8AAIA/"),
-"format": 34359738391,
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 36,
-"vertex_data": PackedByteArray("Z2bmvgAAYMBnZuY+Z2bmvgAAYMBnZua+Z2bmvgAAYEBnZua+Z2bmPgAAYMBnZua+Z2bmvgAAYMBnZua+Z2bmvgAAYMBnZuY+Z2bmvgAAYEBnZua+Z2bmvgAAYMBnZua+Z2bmPgAAYMBnZua+Z2bmvgAAYEBnZua+Z2bmvgAAYEBnZuY+Z2bmvgAAYMBnZuY+Z2bmvgAAYMBnZuY+Z2bmvgAAYEBnZuY+Z2bmPgAAYEBnZuY+Z2bmPgAAYEBnZuY+Z2bmvgAAYEBnZuY+Z2bmvgAAYEBnZua+Z2bmvgAAYMBnZuY+Z2bmPgAAYMBnZuY+Z2bmPgAAYMBnZua+Z2bmPgAAYEBnZuY+Z2bmPgAAYMBnZuY+Z2bmvgAAYMBnZuY+Z2bmPgAAYMBnZua+Z2bmPgAAYMBnZuY+Z2bmPgAAYEBnZuY+Z2bmPgAAYMBnZua+Z2bmPgAAYEBnZua+Z2bmvgAAYEBnZua+Z2bmvgAAYEBnZua+Z2bmPgAAYEBnZua+Z2bmPgAAYEBnZuY+Z2bmPgAAYEBnZuY+Z2bmPgAAYEBnZua+Z2bmPgAAYMBnZua+AAD/f/9//n8AAP9//3/+fwAA/3//f/5//38AAP//AAD/fwAA//8AAP9/AAD//wAA/////wAA/z//////AAD/P/////8AAP8/AAD/f/9//n8AAP9//3/+fwAA/3//f/5//3//fwAA/z//f/9/AAD/P/9//38AAP8//3//////AAD/f/////8AAP9//////wAA/38AAP//AAD/fwAA//8AAP9/AAD//wAA/3//fwAA/z//f/9/AAD/P/9//38AAP8/////f/9//n////9//3/+f////3//f/5//////wAA/z//////AAD/P/////8AAP8//3//////AAD/f/////8AAP9//////wAA////f/9//n////9//3/+f////3//f/5/")
-}]
 
 [node name="World" type="Node3D" unique_id=1717920591]
 script = ExtResource("1_ql3sk")
@@ -407,23 +312,23 @@ shadow_enabled = true
 replication_config = SubResource("SceneReplicationConfig_gkrt5")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=66798175]
-_spawnable_scenes = PackedStringArray("uid://csg6as35svocy")
+_spawnable_scenes = PackedStringArray("uid://csg6as35svocy", "uid://60qftp8wow81", "uid://cody1i55q7p7k")
 spawn_path = NodePath("../SpawnContainer")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1137082674]
 transform = Transform3D(-0.9615642, -0.1372901, 0.23779352, 4.4703487e-08, 0.8660254, 0.5, -0.27458027, 0.48078212, -0.832739, 1.5788616, 5.750045, -9.889214)
 
-[node name="debug_level" parent="." unique_id=1550267707 instance=ExtResource("3_syp3n")]
+[node name="debug_level" parent="." unique_id=730971560 instance=ExtResource("3_syp3n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.11244774, 0.087500095, 0.054012537)
 script = ExtResource("4_n1yv3")
 
-[node name="Cube" parent="debug_level" index="15" unique_id=1533529678]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.005005, 0.44610977, 0.27717873)
-
-[node name="player-reference" parent="debug_level" index="18" unique_id=28734495]
+[node name="player-reference" parent="debug_level" index="18" unique_id=1642338975]
 surface_material_override/0 = ExtResource("4_2f13d")
 
-[node name="robuddy" parent="debug_level/robuddy_base" parent_id_path=PackedInt32Array(1550267707, 536996899) index="0" unique_id=645208334]
+[node name="Cube" parent="debug_level" index="23" unique_id=1121380734]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.005005, 0.44610977, 0.27717873)
+
+[node name="robuddy" parent="debug_level/robuddy_base" parent_id_path=PackedInt32Array(730971560, 1654831903) index="0" unique_id=313739752]
 surface_material_override/2 = ExtResource("6_n1yv3")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="debug_level/robuddy_base/robuddy" index="1" unique_id=382217284]
@@ -437,6 +342,9 @@ omni_attenuation = -2.119
 [node name="AnimationPlayer" type="AnimationPlayer" parent="debug_level/robuddy_base/robuddy/OmniLight3D" unique_id=424404180]
 libraries/ = SubResource("AnimationLibrary_cruy3")
 autoplay = &"test"
+
+[node name="speed_checker" parent="." unique_id=436068124 instance=ExtResource("7_m6i4j")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 15.132832, 0.24485438, 4.8976383)
 
 [node name="button" type="StaticBody3D" parent="." unique_id=268096522]
 script = SubResource("GDScript_gkrt5")
@@ -470,25 +378,18 @@ shape = SubResource("CylinderShape3D_gkrt5")
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_gl70v")
 
-[node name="BallSpawner" type="Node3D" parent="." unique_id=1877347808]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7, 10.1, -11.900001)
-script = SubResource("GDScript_2f13d")
-
-[node name="Timer" type="Timer" parent="BallSpawner" unique_id=942416820]
-autostart = true
-
 [node name="Water" type="CSGCombiner3D" parent="." unique_id=477854757]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.452295, 1.5776978, 5.5590577)
 
 [node name="WaterMaker3D" parent="Water" unique_id=1288463309 instance=ExtResource("7_6f5u7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.382275, -9.898592, 11.968187)
 size = Vector3(25.64526, 16.132324, 27.432266)
-material = SubResource("StandardMaterial3D_3te1k")
+material = SubResource("StandardMaterial3D_wkx05")
 
 [node name="WaterMaker3D2" parent="Water" unique_id=1458865344 instance=ExtResource("7_6f5u7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8721895, 6.7079296, 21.618773)
 size = Vector3(2.4875178, 49.345367, 3.0664845)
-material = SubResource("StandardMaterial3D_d660w")
+material = SubResource("StandardMaterial3D_mnewx")
 
 [node name="Elevator" type="AnimatableBody3D" parent="." unique_id=1928637275]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4987962, -0.4352219, 17.258144)
@@ -508,46 +409,16 @@ libraries/ = SubResource("AnimationLibrary_3te1k")
 [node name="CheckAllPlayers" parent="." unique_id=756501689 instance=ExtResource("11_cruy3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4987962, 1.7428422, 17.258144)
 size = Vector3(5.1601563, 3.310669, 4.837448)
-material = SubResource("StandardMaterial3D_lwirc")
+material = SubResource("StandardMaterial3D_v31yl")
 one_time = false
 amount_players_needed = 0
 
 [node name="CollisionShape3D" parent="CheckAllPlayers/CheckPlayersArea" parent_id_path=PackedInt32Array(756501689, 690338201) index="0" unique_id=1369684475]
-shape = SubResource("BoxShape3D_v31yl")
+shape = SubResource("BoxShape3D_i1tui")
 
 [node name="Label3D" parent="CheckAllPlayers" index="1" unique_id=563407221]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.5658264)
 text = "MAX: 0 ACTUAL: 0"
-
-[node name="Node3D2" type="Node3D" parent="." unique_id=541641774]
-transform = Transform3D(-0.99994904, 0, 8.741737e-08, 0, 0.99998885, 0, -8.741832e-08, 0, -0.99993813, 29.8, 15.457532, -13.077404)
-
-[node name="Node3D" type="Node3D" parent="Node3D2" unique_id=903822826]
-transform = Transform3D(1, 0, 0, 0, 1.0000277, 0, 0, 0, 1.0000159, 0, 0, 0)
-script = SubResource("GDScript_cruy3")
-
-[node name="Hammer" type="AnimatableBody3D" parent="Node3D2/Node3D" unique_id=489187845]
-transform = Transform3D(-0.18602656, -0.9824415, 0.014241669, 0.010038659, 0.012593489, 0.99987024, -0.98249346, 0.18614541, 0.007519692, 0, 0, 0)
-
-[node name="Area3D" type="Area3D" parent="Node3D2/Node3D/Hammer" unique_id=1075378066]
-
-[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Node3D2/Node3D/Hammer/Area3D" unique_id=711960211]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09008789, -8.111644, 0.058197975)
-shape = SubResource("BoxShape3D_cruy3")
-
-[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Node3D2/Node3D/Hammer" unique_id=1411236633]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.038004, 0.0402565)
-mesh = SubResource("ArrayMesh_6oqxa")
-
-[node name="CSGBakedCollisionShape3D2" type="CollisionShape3D" parent="Node3D2/Node3D/Hammer" unique_id=879450130]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.050001144, -3.538004, -0.0097436905)
-shape = SubResource("ConcavePolygonShape3D_3te1k")
-
-[node name="CSGBakedMeshInstance3D2" type="MeshInstance3D" parent="Node3D2/Node3D/Hammer" unique_id=346138567]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.050001144, -3.538004, -0.0097436905)
-mesh = SubResource("ArrayMesh_wkx05")
-
-[node name="Marker3D" type="Marker3D" parent="Node3D2/Node3D/Hammer" unique_id=20520394]
 
 [node name="CheckPlayers" parent="." unique_id=1450361933 instance=ExtResource("11_cruy3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.87472, 6.7563252, -12.990064)
@@ -556,7 +427,6 @@ one_time = true
 amount_players_needed = 1
 
 [connection signal="interacted" from="button/InteractableComponent" to="button" method="_press"]
-[connection signal="timeout" from="BallSpawner/Timer" to="BallSpawner" method="_on_timer_timeout"]
 [connection signal="all_players_inside" from="CheckAllPlayers" to="Elevator/AnimationPlayer" method="play" binds= ["up"]]
 
 [editable path="debug_level"]

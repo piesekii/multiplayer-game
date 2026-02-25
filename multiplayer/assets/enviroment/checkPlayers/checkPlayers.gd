@@ -1,7 +1,7 @@
 extends CSGBox3D
 
 @export var one_time := false
-@export var amount_players_needed := 0
+@export var amount_players_needed = 0
 
 @onready var collision_shape_3d: CollisionShape3D = %CollisionShape3D
 @onready var check_players_area: Area3D = %CheckPlayersArea
@@ -16,10 +16,10 @@ func _update_mesh():
 	if get_node_or_null("%CollisionShape3D"):
 		collision_shape_3d.shape.size = self.size
 
-func _process(delta):
+func _process(_delta):
 	_update_mesh()
 
-var amount_players_inside := 0
+var amount_players_inside = 0
 
 func _on_check_players_area_body_entered(body: Node) -> void:
 	if body is Player:

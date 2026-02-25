@@ -63,6 +63,8 @@ script = ExtResource("1_7s6ww")
 
 [node name="SwimmableArea3D" type="Area3D" parent="." unique_id=690338201 groups=["water_area"]]
 unique_name_in_owner = true
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="SwimmableArea3D" unique_id=1369684475]
 unique_name_in_owner = true

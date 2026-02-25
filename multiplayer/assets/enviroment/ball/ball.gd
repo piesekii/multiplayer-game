@@ -1,12 +1,17 @@
-extends RigidBody3D
+extends FloatableRigidBody3D
 
-@onready var area_3d: Area3D = %Area3D
+@onready var area_3d: Area3D = $Area3D
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	area_3d.body_entered.connect(on_ball_hit)
+var source: int
+
+#func _ready() -> void:
+	#area_3d.body_entered.connect(on_ball_hit)
 
 func on_ball_hit(body: Node3D):
-	pass
-	#if body.is_in_group('Player'):
-		#queue_free()
+	if not is_multiplayer_authority():
+		return
+
+	if body.has_method('take_damage'):
+		body.take_damage(10, source)
+	
+	queue_free()

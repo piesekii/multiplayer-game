@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cnjas6whorjum"]
 
 [ext_resource type="Script" uid="uid://b3eb4oc1ex6h" path="res://assets/scenes/ui/main_menu.gd" id="1_4lhqn"]
+[ext_resource type="Texture2D" uid="uid://b4o7vx0n8db1s" path="res://addons/tube/icons/tube_client.svg" id="2_or24b"]
 [ext_resource type="Shader" uid="uid://ddxgjcn15adry" path="res://assets/shaders/transition.gdshader" id="2_qcgr3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4lhqn"]
@@ -179,22 +180,83 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/Center/MarginContainer" unique_id=1973694029]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/Center/MarginContainer" unique_id=754548220]
+layout_mode = 2
+theme_override_constants/separation = 48
+
+[node name="ENet" type="VBoxContainer" parent="Control/Center/MarginContainer/HBoxContainer" unique_id=1973694029]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/Center/MarginContainer/VBoxContainer" unique_id=457908782]
+[node name="Label" type="Label" parent="Control/Center/MarginContainer/HBoxContainer/ENet" unique_id=457908782]
 layout_mode = 2
-text = "Muck so que bom"
+text = "                  Enet                  "
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="ButtonJoin" type="Button" parent="Control/Center/MarginContainer/VBoxContainer" unique_id=1195106248]
+[node name="ButtonJoin" type="Button" parent="Control/Center/MarginContainer/HBoxContainer/ENet" unique_id=1195106248]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Join"
 
-[node name="ButtonQuit" type="Button" parent="Control/Center/MarginContainer/VBoxContainer" unique_id=458587503]
+[node name="ButtonQuit" type="Button" parent="Control/Center/MarginContainer/HBoxContainer/ENet" unique_id=458587503]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"
+
+[node name="Tube" type="VBoxContainer" parent="Control/Center/MarginContainer/HBoxContainer" unique_id=1986487906]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/Center/MarginContainer/HBoxContainer/Tube" unique_id=1310805684]
+layout_mode = 2
+text = "Tube"
+
+[node name="HSeparator2" type="HSeparator" parent="Control/Center/MarginContainer/HBoxContainer/Tube" unique_id=1200106165]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelSessionId" type="Label" parent="Control/Center/MarginContainer/HBoxContainer/Tube" unique_id=1998922625]
+layout_mode = 2
+text = "Session ID:"
+
+[node name="LineEditSession" type="LineEdit" parent="Control/Center/MarginContainer/HBoxContainer/Tube" unique_id=10131682]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="LabelUsername" type="Label" parent="Control/Center/MarginContainer/HBoxContainer/Tube" unique_id=449113908]
+layout_mode = 2
+text = "Username:"
+
+[node name="LineEditUsername" type="LineEdit" parent="Control/Center/MarginContainer/HBoxContainer/Tube" unique_id=1196132652]
+unique_name_in_owner = true
+layout_mode = 2
+max_length = 12
+
+[node name="HSeparator" type="HSeparator" parent="Control/Center/MarginContainer/HBoxContainer/Tube" unique_id=1941574645]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ButtonJoinTube" type="Button" parent="Control/Center/MarginContainer/HBoxContainer/Tube" unique_id=1425344635]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Join"
+
+[node name="ButtonQuitTube" type="Button" parent="Control/Center/MarginContainer/HBoxContainer/Tube" unique_id=18875989]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit"
+
+[node name="HSeparator3" type="HSeparator" parent="Control/Center/MarginContainer/HBoxContainer/Tube" unique_id=1825850632]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ButtonCreateTube" type="Button" parent="Control/Center/MarginContainer/HBoxContainer/Tube" unique_id=971082290]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/icon_max_width = 19
+text = "Create Session"
+icon = ExtResource("2_or24b")
 
 [node name="Transition" type="ColorRect" parent="." unique_id=399091334]
 z_index = -1
