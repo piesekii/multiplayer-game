@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://35j3o6vwssvm"]
+
+[ext_resource type="Script" uid="uid://c2geic0mpx0it" path="res://assets/actives/checkpoint/checkpoint.gd" id="1_tuvl5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tuvl5"]
+transparency = 1
+albedo_color = Color(0.43529412, 0.7254902, 0.2784314, 0.21176471)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tuvl5"]
+
+[node name="Checkpoint" type="CSGBox3D" unique_id=907198981]
+material = SubResource("StandardMaterial3D_tuvl5")
+script = ExtResource("1_tuvl5")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1620981753]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=805173989]
+unique_name_in_owner = true
+shape = SubResource("BoxShape3D_tuvl5")
+debug_color = Color(0.88001925, 0.21591541, 0.6541418, 0.41960785)
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

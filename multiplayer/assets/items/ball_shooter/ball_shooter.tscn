@@ -78,14 +78,16 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath(".:visible")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [node name="ball_shooter" type="MeshInstance3D" unique_id=670117112]
 transform = Transform3D(0.1619122, 0, 0, 0, 0.1619122, 0, 0, 0, 0.1619122, 0, 0, 0)
 mesh = SubResource("ArrayMesh_lux2c")
 script = ExtResource("1_hd6rn")
-_position = Vector3(0.34119868, -0.39421764, -0.67687595)
-_rotation = Vector3(0, 1.5275122, 0)
-_scale = Vector3(0.087, 0.087, 0.087)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=390129651]
 replication_config = SubResource("SceneReplicationConfig_hd6rn")
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

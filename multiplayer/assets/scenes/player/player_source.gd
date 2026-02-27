@@ -110,7 +110,6 @@ func _physics_process(delta):
 	# Depending on which way you have you character facing, you may have to negate the input directions
 	wish_dir = self.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
 	cam_aligned_wish_dir = camera_3d.global_transform.basis * Vector3(input_dir.x, 0., input_dir.y)
-	
 	if not _handle_noclip(delta):
 		if not _handle_water_physics(delta):
 			if is_on_floor():

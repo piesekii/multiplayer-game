@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://boyaa3gqodld1"]
+
+[ext_resource type="Script" uid="uid://c3400lwpgr4c4" path="res://assets/actives/deathzone/deathzone.gd" id="1_37q4w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tuvl5"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.67800194, 0, 0.050729886, 0.11372549)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tuvl5"]
+
+[node name="Deathzone" type="CSGBox3D" unique_id=907198981]
+material = SubResource("StandardMaterial3D_tuvl5")
+script = ExtResource("1_37q4w")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1620981753]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=805173989]
+unique_name_in_owner = true
+shape = SubResource("BoxShape3D_tuvl5")
+debug_color = Color(0.8784314, 0.21568628, 0.654902, 0.85490197)
+
+[node name="Timer" type="Timer" parent="." unique_id=1798565074]
+autostart = true
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

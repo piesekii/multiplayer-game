@@ -15,20 +15,16 @@ var spawn_players : Node3D
 
 @rpc("any_peer", "call_local")
 func pickup_item(player_peer : int, item_id : int) -> void:
-	var player_node 
+	var player_node : Player
 	for i in get_tree().get_nodes_in_group("Player"):
 		if i.name == str(player_peer):
 			print("oiii sou eu, ", i.name)
 			player_node = i
-			
 	match  item_id:
 		1:
-			var new_item = BALL_SHOOTER.instantiate()
-			new_item.position = Vector3(0, 2.5, 0)#new_item._position
-			#new_item.rotation = new_item._rotation
-			new_item.pickable_item_id = item_id
-			#player_node.hand.add_child(new_item, true)
-			spawn_container.add_child(new_item, true)
+			var ball_shooter = player_node.hand.find_child("ball_shooter")
+			ball_shooter.rpc("update_item", true)
+			#player_node.hand.current_item.active = true
 
 @rpc("any_peer", "call_local")
 func drop_item(item_id : int, position : Vector3, rotation : Vector3) -> void:
@@ -37,11 +33,13 @@ func drop_item(item_id : int, position : Vector3, rotation : Vector3) -> void:
 		await get_tree().create_timer(0.1).timeout
 	match item_id:
 		1:
+			print(rotation)
 			var new_dropped = PICKABLE_BALL_SHOOTER.instantiate()
 			new_dropped.position = position
-			new_dropped.rotation = rotation
+			new_dropped.rotation = rotation + Vector3(0,85,0)
+			print(new_dropped.rotation)
 			spawn_container.add_child(new_dropped, true)
-			print("INSTANCIADO")
+			#print("INSTANCIADO")
 
 @rpc("any_peer", "call_local")
 func shoot_ball(pos, dir, force):

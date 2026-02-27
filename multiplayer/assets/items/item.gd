@@ -9,11 +9,21 @@ signal signal_pull_trigger
 signal signal_released_trigger
 signal signal_drop_item
 
-@export var _position : Vector3
-@export var _rotation : Vector3
-@export var _scale : Vector3
+var is_active := false
+
+@rpc('any_peer', 'call_local')
+func update_item(value : bool) -> void:
+	if value:
+		is_active = true
+		visible = true
+		hand.current_item = self
+	else:
+		is_active = false
+		visible = false
+		hand.current_item = null
 
 func _ready() -> void:
+	hand = get_parent()
 	#position = _position
 	#rotation = _rotation
 	#scale = _scale
@@ -30,6 +40,7 @@ func _input(event: InputEvent) -> void:
 		signal_released_trigger.emit()
 	if event.is_action_pressed("drop"):
 		signal_drop_item.emit()
+
 func item_drop_item() -> void:
 	pass
 

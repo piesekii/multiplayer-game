@@ -1,12 +1,16 @@
 extends Item
 
 
-
 func item_drop_item() -> void:
-	Global.drop_item.rpc_id(1, pickable_item_id, hand.player.global_position, rotation)
-	
+	if !is_active:
+		return
+	Global.drop_item.rpc(pickable_item_id, global_position, hand.player.rotation)
+	if is_multiplayer_authority():
+		rpc("update_item", false)
 
 func item_pull_trigger() -> void:
+	if !is_active:
+		return
 	shoot()
 
 func shoot():

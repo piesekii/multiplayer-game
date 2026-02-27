@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://cody1i55q7p7k"]
 
-[ext_resource type="Script" uid="uid://lod8yuv1exyt" path="res://assets/enviroment/interactable/InteractableComponent.gd" id="2_asqwa"]
+[ext_resource type="Script" uid="uid://lod8yuv1exyt" path="res://assets/actives/interactable/InteractableComponent.gd" id="2_asqwa"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bba4y"]
 resource_name = "Vermelho"
@@ -53,10 +53,11 @@ properties/0/spawn = true
 properties/0/replication_mode = 1
 properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
-properties/1/replication_mode = 1
+properties/1/replication_mode = 2
 
 [node name="pickable_ball_shooter" type="RigidBody3D" unique_id=103456761]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+collision_layer = 2
 
 [node name="Cube_003" type="MeshInstance3D" parent="." unique_id=625860712]
 transform = Transform3D(0.1619122, 0, 0, 0, 0.1619122, 0, 0, 0, 0.1619122, 0, 0, 0)
